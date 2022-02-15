@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"althenwaysatan.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="$\ \ \ \ \ \ \ \,$关于莫比乌斯反演，杜教筛等的杂记：">
+<meta property="og:type" content="website">
+<meta property="og:title" content="莫比乌斯反演与杜教筛">
+<meta property="og:url" content="https://althenwaysatan.github.io/2018/12/30/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94%E4%B8%8E%E6%9D%9C%E6%95%99%E7%AD%9B/index.html">
+<meta property="og:site_name" content="Althen&#39;s Blog">
+<meta property="og:description" content="$\ \ \ \ \ \ \ \,$关于莫比乌斯反演，杜教筛等的杂记：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-12-30T04:31:26.000Z">
+<meta property="article:modified_time" content="2022-02-14T05:35:00.769Z">
+<meta property="article:author" content="周道">
+<meta property="article:tag" content="OI">
+<meta property="article:tag" content="莫比乌斯反演">
+<meta property="article:tag" content="杜教筛">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://althenwaysatan.github.io/2018/12/30/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94%E4%B8%8E%E6%9D%9C%E6%95%99%E7%AD%9B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://althenwaysatan.github.io/2018/12/30/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94%E4%B8%8E%E6%9D%9C%E6%95%99%E7%AD%9B/","path":"2018/12/30/莫比乌斯反演与杜教筛/","title":"莫比乌斯反演与杜教筛"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>莫比乌斯反演与杜教筛 | Althen's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Althen's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">周道的个人博客，记录学习历程，目前正在逐步完善中</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/contentimg/beatheart.html" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E8%AF%86%E6%95%B0%E8%AE%BA%E5%B8%B8%E8%A7%81%E7%A7%AF%E6%80%A7%E5%87%BD%E6%95%B0%EF%BC%9A%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0-varphi-%EF%BC%8C%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%87%BD%E6%95%B0-mu"><span class="nav-number">1.</span> <span class="nav-text">初识数论常见积性函数：欧拉函数$\varphi$，莫比乌斯函数$\mu$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E8%AE%BA%E5%88%86%E5%9D%97"><span class="nav-number">2.</span> <span class="nav-text">数论分块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8B%84%E5%88%A9%E5%85%8B%E9%9B%B7%E5%8D%B7%E7%A7%AF"><span class="nav-number">3.</span> <span class="nav-text">狄利克雷卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B1%82%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%86%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">$\ \ \ \ \ \,$如何求一个函数的逆：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%B8%AD-mu-%E5%B0%B1%E6%98%AF%E5%87%BD%E6%95%B0-1-%E7%9A%84%E9%80%86%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%AF%B4-mu-1-%CF%B5"><span class="nav-number">3.1.1.</span> <span class="nav-text">$\ \ \ \ \ \,$其中$\mu$就是函数$1$的逆，也就是说$\mu*1&#x3D;ϵ$</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94"><span class="nav-number">4.</span> <span class="nav-text">莫比乌斯反演</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E5%9B%9E%E9%A1%BE"><span class="nav-number">4.1.</span> <span class="nav-text">莫比乌斯反演经典例题回顾</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%9C%E6%95%99%E7%AD%9B"><span class="nav-number">5.</span> <span class="nav-text">杜教筛</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%9D%E5%B0%94%E7%BA%A7%E6%95%B0"><span class="nav-number">5.1.</span> <span class="nav-text">贝尔级数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%AF%94%E8%BE%83%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AE%B9%E6%98%93%E6%B1%82%E7%9A%84%E5%8D%B7%E7%A7%AF"><span class="nav-number">5.2.</span> <span class="nav-text">一些比较常见的容易求的卷积</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="周道"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">周道</p>
+  <div class="site-description" itemprop="description">⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AlthenWaySatan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:guangyuanzhouzheyu@outlook.com" title="E-Mail → mailto:guangyuanzhouzheyu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/althenwaysatan" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;althenwaysatan" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/AlthenWaySatan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5862576360" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5862576360" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=2469265056&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;2469265056&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://ferric.top/" title="http:&#x2F;&#x2F;ferric.top&#x2F;" rel="noopener" target="_blank">FerricIon</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <a href="/">
+    <div class="back-to-home" role="button">
+      <i class="fa fa-home"></i>
+    </div>
+  </a>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://althenwaysatan.github.io/2018/12/30/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94%E4%B8%8E%E6%9D%9C%E6%95%99%E7%AD%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="周道">
+      <meta itemprop="description" content="⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Althen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          莫比乌斯反演与杜教筛
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-30 12:31:26" itemprop="dateCreated datePublished" datetime="2018-12-30T12:31:26+08:00">2018-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-14 13:35:00" itemprop="dateModified" datetime="2022-02-14T13:35:00+08:00">2022-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>$\ \ \ \ \ \ \ \,$关于莫比乌斯反演，杜教筛等的杂记：</p>
+<span id="more"></span>
+<h2 id="初识数论常见积性函数：欧拉函数-varphi-，莫比乌斯函数-mu"><a href="#初识数论常见积性函数：欧拉函数-varphi-，莫比乌斯函数-mu" class="headerlink" title="初识数论常见积性函数：欧拉函数$\varphi$，莫比乌斯函数$\mu$"></a>初识数论常见积性函数：欧拉函数$\varphi$，莫比乌斯函数$\mu$</h2><p>$\ \ \ \ \ \,$所谓积性函数，就是对于一个函数$f(x)$，若是对于任意$x_1$，$x_2$满足$f(x_1)\times f(x_2)=f(x_1\times x_2)$。对于任何积性函数$f(x)$，都有$f(1)=1$。</p>
+<ul>
+<li><p>欧拉函数$\varphi(x)$的意义：在$[1,x]$内，与$x$互质的个数。</p>
+<p>$1$.若$x$为素数，$\varphi(x)=x-1$;</p>
+<p>$2$.若$x\%p=0$，$\varphi(x\cdot p)=\varphi(x)\cdot p$;</p>
+<p>$3$.若$x\%p\neq 0$，且$x$为素数，$\varphi(x\cdot p)=\varphi(x)\cdot (p-1)$;</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/blog/hdxrie/dui-ou-la-han-shuo-di-li-xie">【证明戳这里<del>（%%%大巨佬orz）</del>】</a></p>
+</li>
+<li><p>莫比乌斯函数$\mu(x)$的意义：设$x$的不同质因子个数为$a$，$\mu(x)=(-1)^{a}$；当n存在平方因子时，$\mu(x)=0$。</p>
+<p>$1$.若$x$有奇数个不同质因数，$\mu(x)=-1$。</p>
+<p>$2$.若$x$有偶数个不同质因数，$\mu(x)=1$。</p>
+<p>$3$.若$x$有平方因子，$\mu(x)=0$。</p>
+</li>
+</ul>
+<p>$\ \ \ \ \ \,$还有一些简单的积性函数，在这里一并介绍了：</p>
+<p>$ϵ(x)=\begin{cases}1&amp;x=1\\0&amp;x&gt;1\end{cases}$</p>
+<p>$id(x)=x$</p>
+<p>$id^k(x)=x^k$</p>
+<p>$\sigma(x)=\sum_{i|x}1$</p>
+<p>$1$</p>
+<h2 id="数论分块"><a href="#数论分块" class="headerlink" title="数论分块"></a>数论分块</h2><p>$\ \ \ \ \ \,$很多时候，我们会遇到这样的式子:</p>
+<p>$\sum_{i=1}^{n}f(i)\times g\left(\left\lfloor\frac{n}{i}\right\rfloor\right)$</p>
+<p>$\ \ \ \ \ \,$若是我们已经提前知道了$f(x)$在$x\in [1,n]$的值了，但是需要多次计算上面形式的式子的值，每次询问复杂度是$O(n)$的，显然在询问很多的时候，没有很划算。</p>
+<p>$\ \ \ \ \ \,$我们枚举了很多$i$，使得很多$\left\lfloor\frac{n}{i}\right\rfloor$都相等，所以我们可以把$\sum_{i=1}^{n}$，分成$\sqrt{n}\ $块，使得每一块的$\left\lfloor\frac{n}{i}\right\rfloor$都相等，这样我们可以通过结合律得到下面的式子，$O(n)$预处理$sum(x)=\sum_{i=1}^{x}f(i)$，来简化询问复杂度到$O(\sqrt{n})$：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Get_ans</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> ans=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> l=<span class="number">1</span>,r;l&lt;=n;l=r+<span class="number">1</span>)&#123;</span><br><span class="line">    r=n/(n/l);</span><br><span class="line">    ans+=<span class="built_in">g</span>(n/l)*(sum[r]-sum[l<span class="number">-1</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="狄利克雷卷积"><a href="#狄利克雷卷积" class="headerlink" title="狄利克雷卷积"></a>狄利克雷卷积</h2><p>  $(f*g)(n)=\sum_{x|n}f(x)\times g\left(\frac{n}{x}\right)$</p>
+<p>  既：</p>
+<p>  $(f*g)(n)=\sum_{xy=n}f(x)\times g(y)$</p>
+<p>  狄利克雷卷积的性质：</p>
+<pre><code>**1.交换律:** $f*g=g*f$；
+
+**2.结合律:**  $(f*g)*h=g*(f*h)$；$(a\times f)*g=a\times (f*g)$；
+
+**3.分配律:**  $(f+g)*h=f*h+g*h$；
+
+**4.单位元:**  $ϵ*f=f$；其中$ϵ(x)=\begin&#123;cases&#125;1&amp;x=1\\0&amp;x&gt;1\end&#123;cases&#125;$；
+
+**5.逆元:**  对于每个$f(1)\neq0$的函数，都存在一个函数$g$使得$f*g=ϵ$；
+
+**6.两个积性函数的狄利克雷卷积是积性函数。**
+</code></pre><h3 id="如何求一个函数的逆："><a href="#如何求一个函数的逆：" class="headerlink" title="$\ \ \ \ \ \,$如何求一个函数的逆："></a>$\ \ \ \ \ \,$如何求一个函数的逆：</h3><p> $\begin{aligned}ϵ&amp;=f*g\\ &amp;=\sum_{x|n}f(x)\times g\left(\frac{n}{x}\right)\\ &amp;=f(1)\times g(n)+\sum_{x|n,i\neq1}f(x)\times g\left(\frac{n}{x}\right)\\&amp;=[n=1]\end{aligned}$<br>$\ \ \ \ \ \,$所以有：<br>$f(1)\times g(n)=[n=1]-\sum_{x|n,i\neq1}f(x)\times g\left(\frac{n}{x}\right)$<br>$g(n)=\frac{1}{f(1)}\left([n=1]-\sum_{x|n,i\neq1}f(x)\times g\left(\frac{n}{x}\right)\right)$</p>
+<h4 id="其中-mu-就是函数-1-的逆，也就是说-mu-1-ϵ"><a href="#其中-mu-就是函数-1-的逆，也就是说-mu-1-ϵ" class="headerlink" title="$\ \ \ \ \ \,$其中$\mu$就是函数$1$的逆，也就是说$\mu*1=ϵ$"></a>$\ \ \ \ \ \,$其中$\mu$就是函数$1$的逆，也就是说$\mu*1=ϵ$</h4><h2 id="莫比乌斯反演"><a href="#莫比乌斯反演" class="headerlink" title="莫比乌斯反演"></a>莫比乌斯反演</h2><p>$\ \ \ \ \ \,$莫比乌斯反演的本质就是利用性质$\mu*1=ϵ$，改变枚举方式，降低式子的复杂度。</p>
+<p>$\ \ \ \ \ \,$最常见的操作是,反演式子$\sum_{i=1}^n\sum_{j=1}^{m}[gcd(i,j)=1]$:</p>
+<p>$\sum_{i=1}^n\sum_{j=1}^{m}[gcd(i,j)=1]$</p>
+<p>$\sum_{i=1}^n\sum_{j=1}^{m}ϵ(gcd(i,j))$</p>
+<p>$\sum_{i=1}^n\sum_{j=1}^{m}(\mu*1)(gcd(i,j))$</p>
+<p>$\sum_{i=1}^n\sum_{j=1}^{m}\sum_{d|gcd(i,j)}\mu(d)\times 1$</p>
+<p>$\sum_{i=1}^n\sum_{j=1}^{m}\sum_{d=1}^{min(n,m)}\mu(d)[d|gcd(i,j)]$</p>
+<p>$\sum_{d=1}^{min(n,m)}\mu(d)\sum_{i=1}^n\sum_{j=1}^{m}[d|gcd(i,j)]$</p>
+<p>$\sum_{d=1}^{min(n,m)}\mu(d)\sum_{i=1}^{\left\lfloor\frac{n}{d}\right\rfloor}\sum_{j=1}^{\left\lfloor\frac{m}{d}\right\rfloor}1$</p>
+<p>$\sum_{d=1}^{min(n,m)}\mu(d)\sum_{i=1}^{\left\lfloor\frac{n}{d}\right\rfloor}1\sum_{j=1}^{\left\lfloor\frac{m}{d}\right\rfloor}1$</p>
+<p>$\sum_{d=1}^{min(n,m)}\mu(d){\left\lfloor\frac{n}{d}\right\rfloor}{\left\lfloor\frac{m}{d}\right\rfloor}$</p>
+<h3 id="莫比乌斯反演经典例题回顾"><a href="#莫比乌斯反演经典例题回顾" class="headerlink" title="莫比乌斯反演经典例题回顾"></a><a href="/2018/12/30/莫比乌斯反演经典例题回顾/">莫比乌斯反演经典例题回顾</a></h3><p>  <a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P2522">P2522 [HAOI2011]Problem b</a>（反演+容斥）</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P2257">P2257 YY的GCD</a>（反演）</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P3312">P3312 [SDOI2014]数表</a>（反演+离线+数据结构）</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P3704">P3704 [SDOI2017]数字表格</a>（反演）</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P3327">P3327 [SDOI2015]约数个数和</a>（反演，数表的简化版）</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P3455">P3455 [POI2007]ZAP-Queries</a>（反演，裸的）</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P1829">P1829 [国家集训队]Crash的数字表格 / JZPTAB</a>（反演+欧拉筛，做法新奇）</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P3768">P3768 简单的数学题</a>（反演+杜教筛）</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P4240">P4240 毒瘤之神的考验</a>（反演+奇怪的分块，基本上很结论题了）</p>
+<p>  <a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P1587">P1587 [NOI2016]循环之美</a>（反演+杜教筛+数学知识+奇技淫巧，难题来了）</p>
+<h2 id="杜教筛"><a href="#杜教筛" class="headerlink" title="杜教筛"></a>杜教筛</h2><p><a target="_blank" rel="noopener" href="https://lx-2003.blog.luogu.org/dujiao-sieve#">【铃悬的数学小讲堂——杜教筛】</a></p>
+<p>$\ \ \ \ \ \,$杜教筛是求积性函数的前缀和的筛法，复杂度可以达到小于线性的$O(n^{\frac{2}{3}})$。</p>
+<p>$\ \ \ \ \ \,$对于一个积性函数$f$，令$S(n)=\sum_{i=1}^nf(i)$，再新定义一个函数$g$，则有：</p>
+<p>$\begin{aligned}&amp;\sum_{i=1}^n(f*g)(i)\\=&amp;\sum_{i=1}^n\sum_{x\times y=i}f(x)\times g(y)\\=&amp;\sum_{y=1}^ng(y)\sum_{x\times y\leq n}f(x)\\=&amp;\sum_{y=1}^ng(y)\sum_{x=1}^{\left\lfloor\frac{n}{y}\right\rfloor}f(x)\\=&amp;\sum_{y=1}^ng(y)S\left(\left\lfloor\frac{n}{y}\right\rfloor\right)\end{aligned}$</p>
+<p>$\ \ \ \ \ \,$那么就有：</p>
+<p>$\sum_{i=1}^n(f*g)(i)=g(1)S(n)+\sum_{y=2}^ng(y)S\left(\left\lfloor\frac{n}{y}\right\rfloor\right)$</p>
+<p>$\ \ \ \ \ \,$既：</p>
+<p>$g(1)S(n)=\sum_{i=1}^n(f*g)(i)-\sum_{y=2}^ng(y)S\left(\left\lfloor\frac{n}{y}\right\rfloor\right)$</p>
+<p>$S(n)=\frac{\sum_{i=1}^n(f*g)(i)-\sum_{y=2}^ng(y)S\left(\left\lfloor\frac{n}{y}\right\rfloor\right)}{g(1)}$</p>
+<p>$S(n)={\sum_{i=1}^n(f*g)(i)-\sum_{y=2}^ng(y)S\left(\left\lfloor\frac{n}{y}\right\rfloor\right)}$</p>
+<p>$\ \ \ \ \ \,$若是函数$(f*g)$和$g$的前缀和都可以$O(1)$地算出来，那么我们计算$S(n)$的值的时候递归处理，便可以优化复杂度到$O(n^{\frac{3}{4}})$。</p>
+<p>$\ \ \ \ \ \,$但若是我们先线性预处理出$S(i)\ {i\in[1,n^{\frac{2}{3}}]}$的值，复杂度就可以优化到$O(n^{\frac{2}{3}})$</p>
+<p>$\ \ \ \ \ \,$那么现在的问题是如何找到这个神奇的函数$g$：</p>
+<ul>
+<li><p>对于$\varphi(x)$：</p>
+<p>$\begin{aligned}\varphi(x)=&amp;\prod_{p|x,p\ \rm{is\ prime}}\frac{p^k(p-1)}{p}\\=&amp;x\times \prod_{p|x,p\ \rm{is\ prime}}\left(1-\frac{1}{p}\right)\end{aligned}$</p>
+<p>$\begin{aligned}(\varphi*1)(x)=&amp;\sum_{i|x}\varphi(i)\times 1\left(\frac{x}{i}\right)\\=&amp;\sum_{i|x}\varphi(i)\\=&amp;\sum_{i|x}i\times \prod_{p|i,p\ \rm{is\ prime}}\left(1-\frac{1}{p}\right)\end{aligned}$</p>
+</li>
+</ul>
+<p>显然$(\varphi*1)(x)$</p>
+<p>在$x$为素数的次方情况下，$(\varphi*1)(x)=x$</p>
+<p>，而$(\varphi*1)(x)$</p>
+<p>又为积性函数，可以证明在定义域下$(\varphi*1)(x)=x$</p>
+<p>，既$\varphi*1=id$。</p>
+<p>  <strong>所以我们选取$g=1$,$(f*g)=id$，容易求和。</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="title function_">Sum_id</span><span class="params">(<span class="type">int</span> x)</span>&#123;<span class="keyword">return</span> <span class="number">1ll</span>*x*(x+<span class="number">1</span>)/<span class="number">2</span>;&#125;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="title function_">Sum_1</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span>&#123;<span class="keyword">return</span> <span class="number">1ll</span>*r-l+<span class="number">1</span>;&#125;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> g1=<span class="number">1ll</span>;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="title function_">Sum_phi</span><span class="params">(<span class="type">int</span> x)</span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> ret=Sum_id(x);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>,j;i&lt;=x;i=j+<span class="number">1</span>)</span><br><span class="line">  j=x/(x/i),ret-=Sum_1(i,j)*Sum_phi(x/i);</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>对于$\mu(x)$：</p>
+<p>已知$\mu*1=ϵ$</p>
+<p><strong>所以我们选取$g=1$,$(f*g)=ϵ$，容易求和。</strong></p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="title function_">Sum_e</span><span class="params">(<span class="type">int</span> x)</span>&#123;<span class="keyword">return</span> <span class="number">1ll</span>;&#125;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="title function_">Sum_1</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span>&#123;<span class="keyword">return</span> <span class="number">1ll</span>*r-l+<span class="number">1</span>;&#125;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> g1=<span class="number">1ll</span>;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="title function_">Sum_mu</span><span class="params">(<span class="type">int</span> x)</span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> ret=Sum_e(x);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>,j;i&lt;=x;i=j+<span class="number">1</span>)</span><br><span class="line">  j=x/(x/i),ret-=Sum_1(i,j)*Sum_mu(x/i);</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：杜教筛套杜教筛复杂度还是$O(n^\frac{2}{3})$，因为实际上他们是并列进行的。</strong></p>
+<h3 id="贝尔级数"><a href="#贝尔级数" class="headerlink" title="贝尔级数"></a>贝尔级数</h3><p>  $\ \ \ \ \ \,$对于其他积性函数，为了找到满足条件的$g$，我们引入<strong>贝尔级数</strong>，需要用到生成函数的姿势，但是实际上只需要记住下面的公式就够用了：</p>
+<p>  $\ \ \ \ \ \,$对于积性函数$f$，定义$f$模$p$的贝尔级数为：</p>
+<p>  $f_p(x)=\sum_{i=0}^{\infty}f(p^i)x^i$</p>
+<p>  $\ \ \ \ \ \,$一个完全积性函数的贝尔级数为几何级数：</p>
+<p>  $f_p(x)=\frac{1}{1-f(p)\times x}$</p>
+<p>  $\ \ \ \ \ \,$例如（“*”完全积性函数）:</p>
+<p>  *$ϵ_p(x)=1$</p>
+<p>  *$1_p(x)=\frac{1}{1-x}$</p>
+<p>  *$id^k_p(x)=\frac{1}{1-p^k\cdot x}$</p>
+<p>  $\mu_p(x)=1-x$</p>
+<p>  $\sigma_p(x)=\frac{1}{(1-x)^2}$</p>
+<p>  $(\sigma_1)_p(x)=\frac{1}{1-\sigma_1(p)x+px^2}$ ——&gt; $\left[(\sigma_k)_p(x)=\frac{1}{1-\sigma_k(p)x+p^kx^2}\right]$</p>
+<p>  $\varphi_p(x)=\frac{1-x}{1-p\cdot x}$</p>
+<p>  $\ \ \ \ \ \,$有了这个东西，我们边可以把狄利克雷卷积化成一般卷积的形式：</p>
+<p>  $(f*g)_p(x)=f_p(x)\times g_p(x)$</p>
+<p>  $\ \ \ \ \ \,$再带回去就可以得到我们想要的$g$和$g*f$，主观感觉非常复杂。</p>
+<h3 id="一些比较常见的容易求的卷积"><a href="#一些比较常见的容易求的卷积" class="headerlink" title="一些比较常见的容易求的卷积"></a>一些比较常见的容易求的卷积</h3><p>  $\mu*\sigma=1$</p>
+<p>  $id*id=n$</p>
+<p>  $\varphi*1=id$</p>
+<p>  $\mu*id=\varphi$</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OI/" rel="tag"># OI</a>
+              <a href="/tags/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" rel="tag"># 莫比乌斯反演</a>
+              <a href="/tags/%E6%9D%9C%E6%95%99%E7%AD%9B/" rel="tag"># 杜教筛</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/12/30/%E8%B6%85%E4%BD%8E%E8%83%BD%E8%A7%A3%E8%AF%BB%E7%BE%A4%E8%AE%BA/" rel="prev" title="超低能解读群论">
+                  <i class="fa fa-chevron-left"></i> 超低能解读群论
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/30/%E7%BA%BF%E6%80%A7%E7%AD%9B/" rel="next" title="线性筛">
+                  线性筛 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">周道</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

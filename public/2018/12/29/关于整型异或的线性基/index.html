@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"althenwaysatan.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="$\ \ \ \ \ \ \ \,$关于线性基的复习笔记： $\ \ \ \ \ \ \,$基（$\tt basis$）是线性代数中的一个概念，它是描述、刻画向量空间的基本工具。而在现行的 OI 题目中，通常在利用基在异或空间中的一些特殊性质来解决题目，而这一类题目所涉及的知识点被称作线性基。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于整型异或的线性基">
+<meta property="og:url" content="https://althenwaysatan.github.io/2018/12/29/%E5%85%B3%E4%BA%8E%E6%95%B4%E5%9E%8B%E5%BC%82%E6%88%96%E7%9A%84%E7%BA%BF%E6%80%A7%E5%9F%BA/index.html">
+<meta property="og:site_name" content="Althen&#39;s Blog">
+<meta property="og:description" content="$\ \ \ \ \ \ \ \,$关于线性基的复习笔记： $\ \ \ \ \ \ \,$基（$\tt basis$）是线性代数中的一个概念，它是描述、刻画向量空间的基本工具。而在现行的 OI 题目中，通常在利用基在异或空间中的一些特殊性质来解决题目，而这一类题目所涉及的知识点被称作线性基。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/f9d91e62d79d8b79f4252ecb6a8ead32.gif">
+<meta property="article:published_time" content="2018-12-29T06:30:15.000Z">
+<meta property="article:modified_time" content="2022-02-14T03:26:14.775Z">
+<meta property="article:author" content="周道">
+<meta property="article:tag" content="OI">
+<meta property="article:tag" content="异或">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="线性基">
+<meta property="article:tag" content="修勾勾">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/f9d91e62d79d8b79f4252ecb6a8ead32.gif">
+
+
+<link rel="canonical" href="https://althenwaysatan.github.io/2018/12/29/%E5%85%B3%E4%BA%8E%E6%95%B4%E5%9E%8B%E5%BC%82%E6%88%96%E7%9A%84%E7%BA%BF%E6%80%A7%E5%9F%BA/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://althenwaysatan.github.io/2018/12/29/%E5%85%B3%E4%BA%8E%E6%95%B4%E5%9E%8B%E5%BC%82%E6%88%96%E7%9A%84%E7%BA%BF%E6%80%A7%E5%9F%BA/","path":"2018/12/29/关于整型异或的线性基/","title":"关于整型异或的线性基"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>关于整型异或的线性基 | Althen's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Althen's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">周道的个人博客，记录学习历程，目前正在逐步完善中</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/contentimg/beatheart.html" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5"><span class="nav-number">1.</span> <span class="nav-text">插入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8"><span class="nav-number">2.</span> <span class="nav-text">查询是否存在</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9C%80%E5%A4%A7"><span class="nav-number">3.</span> <span class="nav-text">查询最大</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9C%80%E5%B0%8F"><span class="nav-number">4.</span> <span class="nav-text">查询最小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E7%BB%84%E5%90%88%E7%AC%AC-k-%E5%A4%A7"><span class="nav-number">5.</span> <span class="nav-text">查询组合第$k$大</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6"><span class="nav-number">6.</span> <span class="nav-text">合并</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E6%A8%A1%E6%9D%BF%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">7.</span> <span class="nav-text">完整模板代码：</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="周道"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">周道</p>
+  <div class="site-description" itemprop="description">⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AlthenWaySatan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:guangyuanzhouzheyu@outlook.com" title="E-Mail → mailto:guangyuanzhouzheyu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/althenwaysatan" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;althenwaysatan" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/AlthenWaySatan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5862576360" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5862576360" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=2469265056&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;2469265056&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://ferric.top/" title="http:&#x2F;&#x2F;ferric.top&#x2F;" rel="noopener" target="_blank">FerricIon</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <a href="/">
+    <div class="back-to-home" role="button">
+      <i class="fa fa-home"></i>
+    </div>
+  </a>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://althenwaysatan.github.io/2018/12/29/%E5%85%B3%E4%BA%8E%E6%95%B4%E5%9E%8B%E5%BC%82%E6%88%96%E7%9A%84%E7%BA%BF%E6%80%A7%E5%9F%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="周道">
+      <meta itemprop="description" content="⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Althen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于整型异或的线性基
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-29 14:30:15" itemprop="dateCreated datePublished" datetime="2018-12-29T14:30:15+08:00">2018-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-14 11:26:14" itemprop="dateModified" datetime="2022-02-14T11:26:14+08:00">2022-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>$\ \ \ \ \ \ \ \,$关于线性基的复习笔记：</p>
+<p>$\ \ \ \ \ \ \,$基（$\tt basis$）是线性代数中的一个概念，它是描述、刻画向量空间的基本工具。而在现行的 OI 题目中，通常在利用基在异或空间中的一些特殊性质来解决题目，而这一类题目所涉及的知识点被称作线性基。</p>
+<span id="more"></span>
+<p>$\ \ \ \ \ \ \,$具体证明先不谈，<a target="_blank" rel="noopener" href="https://blog.sengxian.com/algorithms/linear-basis">【给个链接】</a>，下面主要讲关于整型异或的线性基的代码实现和操作。</p>
+<p>$\ \ \ \ \ \ \,$简单来说，线性基是解决一系列整形集合异或值的轻量数据结构，主要思想在于贪心，空间复杂度很低，只有$\log n$的级别（$n$为元素大小上界）:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Linear_Base</span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> a[Lim+<span class="number">10</span>];</span><br><span class="line">&#125;LB;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$\ \ \ \ \ \ \,$他支持的操作有（$n$为元素大小上界）：</p>
+<ol>
+<li><p>向集合中插入一个整形元素（$O(\log n)$）</p>
+</li>
+<li><p>询问集合的中元素是否可以相互异或出某个整形（$O(\log n)$）</p>
+</li>
+<li><p>询问集合的中元素与某个整形可以相互异或出的最大值（$O(\log n)$）</p>
+</li>
+<li><p>询问集合的中元素与某个整形可以相互异或出的最小值（$O(\log n)$）</p>
+</li>
+<li><p>询问集合的中元素可以相互异或出的第$k$大值（$O(\log^2 n)$）</p>
+</li>
+<li><p>合并两个集合(线性基)（$O(\log^2 n)$）</p>
+</li>
+</ol>
+<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><p>$\ \ \ \ \ \ \,$考虑按位异或其实只与每一个位数有关，并且要这个位数为$1$的时候才会造成贡献。问题是如何用 $\log n$ 的空间来描述整个集合的异或集合，我们的想法是：</p>
+<ul>
+<li><p>如果这个数前面高数位的值可以被已有集合表达，那么我们用插入的数异或掉这个可以表达的数，就可以把插入的数化为低位。</p>
+</li>
+<li><p>如果这个数前面高数位的值不能被已有集合表达，那么我们就顺势插入集合，然后弹出。</p>
+</li>
+</ul>
+<p>$\ \ \ \ \ \ \,$这样我们就可以保证，集合的异或值都可以表达出来，没有遗漏，代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">long</span> <span class="type">long</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=Lim;i&gt;=<span class="number">0</span>;i--)<span class="keyword">if</span>(x&amp;(<span class="number">1ll</span>&lt;&lt;i))&#123;</span><br><span class="line">    <span class="keyword">if</span>(!a[i])&#123;a[i]=x;<span class="keyword">return</span>;&#125;</span><br><span class="line">    <span class="keyword">else</span> x^=a[i];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="查询是否存在"><a href="#查询是否存在" class="headerlink" title="查询是否存在"></a>查询是否存在</h2><p>$\ \ \ \ \ \ \,$在插入完成后，线性基的每一一个位置存放的都是这个集合可以通过异或表达的元素，并且最高位就是这个数位，于是查询存在就边成了：</p>
+<ul>
+<li><p>如果询问的数在这个数位为$1$,那么要表达询问的数的一个元素，肯定是这个位数上的元素，于是我们拿询问的数去异或他，询问的数将会成功减少至少一个数位。</p>
+</li>
+<li><p>如果询问的数在这个数位为$0$,那么要表达询问的数的元素肯定没有这个位数上的元素，不然后面再怎么异或，这个位数就消不掉了，所以直接跳过这种位数。</p>
+</li>
+</ul>
+<p>$\ \ \ \ \ \ \,$当然了，要是最后把要查询的这个数都异或为$0$了,这个数当然就存在了，若是异或到后面的位数上的元素都是空的了还没有归$0$，那么肯定就不存在了，代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">check</span><span class="params">(<span class="type">long</span> <span class="type">long</span> x)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=Lim;i&gt;=<span class="number">0</span>;i--)<span class="keyword">if</span>(x&amp;(<span class="number">1ll</span>&lt;&lt;i))&#123;</span><br><span class="line">    <span class="keyword">if</span>(!a[i])<span class="keyword">break</span>;</span><br><span class="line">    x^=a[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> x&gt;<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="查询最大"><a href="#查询最大" class="headerlink" title="查询最大"></a>查询最大</h2><p>$\ \ \ \ \ \ \,$这个比较好想，我们依然从高位到地位枚举，若是询问的数这一个数位的元素异或起来变大了，那么就异或起来，最后便可以得到答案：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">querymax</span><span class="params">(<span class="type">long</span> <span class="type">long</span> res)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=Lim;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">  <span class="keyword">if</span>((res^a[i])&gt;res)res^=a[i];</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="查询最小"><a href="#查询最小" class="headerlink" title="查询最小"></a>查询最小</h2><p>$\ \ \ \ \ \ \,$查询最小的话，我们的策略就需要改变一下了，应该是尽量把为搞数位降成低数位，那么我们的操作和插入的操作其实差不多：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">querymax</span><span class="params">(<span class="type">long</span> <span class="type">long</span> res)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=Lim;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">  <span class="keyword">if</span>(res&amp;(<span class="number">1ll</span>&lt;&lt;i))res^=a[i];</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="查询组合第-k-大"><a href="#查询组合第-k-大" class="headerlink" title="查询组合第$k$大"></a>查询组合第$k$大</h2><p>$\ \ \ \ \ \ \,$这个是最复杂的操作了，简单说一下就好了，主要记板子，主要的想法是我们需要将每一位数的元素后面的位数也消掉，那么我们每一数位的元素就差不多变成了$2^i$，然后把$k$位数拆分就好了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">querykth</span><span class="params">(<span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> tmp[Lim+<span class="number">10</span>],res=<span class="number">0</span>,cnt=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=Lim;i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=i<span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)<span class="keyword">if</span>(a[i]&amp;(<span class="number">1ll</span>&lt;&lt;j))a[i]^=a[j];</span><br><span class="line">    <span class="keyword">if</span>(a[i])tmp[cnt++]=a[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;cnt;i++)<span class="keyword">if</span>(k&amp;(<span class="number">1ll</span>&lt;&lt;i))res^=tmp[i];</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="合并"><a href="#合并" class="headerlink" title="合并"></a>合并</h2><p>$\ \ \ \ \ \ \,$合并的话，就是把一个线性基里面整合的元素再插入另一个就好了呗：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">const</span> Linear_Base &amp;other)</span></span></span><br><span class="line"><span class="function"></span>&#123;<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=Lim;i++) <span class="built_in">insert</span>(other.a[i]);&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="完整模板代码："><a href="#完整模板代码：" class="headerlink" title="完整模板代码："></a>完整模板代码：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Linear_Base</span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> a[Lim+<span class="number">10</span>];</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">long</span> <span class="type">long</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=Lim;i&gt;=<span class="number">0</span>;i--)<span class="keyword">if</span>(x&amp;(<span class="number">1ll</span>&lt;&lt;i))&#123;</span><br><span class="line">      <span class="keyword">if</span>(!a[i])&#123;a[i]=x;<span class="keyword">return</span>;&#125;</span><br><span class="line">      <span class="keyword">else</span> x^=a[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">bool</span> <span class="title">check</span><span class="params">(<span class="type">long</span> <span class="type">long</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=Lim;i&gt;=<span class="number">0</span>;i--)<span class="keyword">if</span>(x&amp;(<span class="number">1ll</span>&lt;&lt;i))&#123;</span><br><span class="line">      <span class="keyword">if</span>(!a[i])<span class="keyword">break</span>;</span><br><span class="line">      x^=a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x&gt;<span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">querymax</span><span class="params">(<span class="type">long</span> <span class="type">long</span> res)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=Lim;i&gt;=<span class="number">0</span>;i--)<span class="keyword">if</span>((res^a[i])&gt;res)res^=a[i];</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">querymin</span><span class="params">(<span class="type">long</span> <span class="type">long</span> res)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=Lim;i&gt;=<span class="number">0</span>;i--)<span class="keyword">if</span>(res&amp;(<span class="number">1ll</span>&lt;&lt;i))res^=a[i];</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">querykth</span><span class="params">(<span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> tmp[Lim+<span class="number">10</span>],res=<span class="number">0</span>,cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=Lim;i++)&#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> j=i<span class="number">-1</span>;j&gt;=<span class="number">0</span>;j--)<span class="keyword">if</span>(a[i]&amp;(<span class="number">1ll</span>&lt;&lt;j))a[i]^=a[j];</span><br><span class="line">      <span class="keyword">if</span>(a[i])tmp[cnt++]=a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;cnt;i++)<span class="keyword">if</span>(k&amp;(<span class="number">1ll</span>&lt;&lt;i))res^=tmp[i];</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">const</span> Linear_Base &amp;other)</span></span></span><br><span class="line"><span class="function">  </span>&#123;<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=Lim;i++) <span class="built_in">insert</span>(other.a[i]);&#125;</span><br><span class="line">&#125;LB;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/f9d91e62d79d8b79f4252ecb6a8ead32.gif" alt=""></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OI/" rel="tag"># OI</a>
+              <a href="/tags/%E5%BC%82%E6%88%96/" rel="tag"># 异或</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E5%9F%BA/" rel="tag"># 线性基</a>
+              <a href="/tags/%E4%BF%AE%E5%8B%BE%E5%8B%BE/" rel="tag"># 修勾勾</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/12/29/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="prev" title="后缀自动机">
+                  <i class="fa fa-chevron-left"></i> 后缀自动机
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/29/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%E6%B3%95/" rel="next" title="拉格朗日插值法">
+                  拉格朗日插值法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">周道</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

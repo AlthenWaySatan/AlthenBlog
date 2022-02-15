@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"althenwaysatan.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="$\ \ \ \ \ \ \ \,$关于OI中常见的线性代数矩阵问题的复习笔记：">
+<meta property="og:type" content="website">
+<meta property="og:title" content="OI中常见的线性代数矩阵问题">
+<meta property="og:url" content="https://althenwaysatan.github.io/2018/12/29/OI%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%9F%A9%E9%98%B5%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Althen&#39;s Blog">
+<meta property="og:description" content="$\ \ \ \ \ \ \ \,$关于OI中常见的线性代数矩阵问题的复习笔记：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-12-29T06:18:02.000Z">
+<meta property="article:modified_time" content="2022-02-14T04:06:00.321Z">
+<meta property="article:author" content="周道">
+<meta property="article:tag" content="OI">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="矩阵乘法">
+<meta property="article:tag" content="矩阵求逆">
+<meta property="article:tag" content="高斯消元">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://althenwaysatan.github.io/2018/12/29/OI%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%9F%A9%E9%98%B5%E9%97%AE%E9%A2%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://althenwaysatan.github.io/2018/12/29/OI%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%9F%A9%E9%98%B5%E9%97%AE%E9%A2%98/","path":"2018/12/29/OI中常见的线性代数矩阵问题/","title":"OI中常见的线性代数矩阵问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OI中常见的线性代数矩阵问题 | Althen's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Althen's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">周道的个人博客，记录学习历程，目前正在逐步完善中</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/contentimg/beatheart.html" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83"><span class="nav-number">1.</span> <span class="nav-text">高斯消元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%A9%E5%92%8C%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">矩阵的秩和行列式的值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">矩阵乘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E9%80%86%E5%85%83"><span class="nav-number">4.</span> <span class="nav-text">矩阵逆元</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="周道"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">周道</p>
+  <div class="site-description" itemprop="description">⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AlthenWaySatan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:guangyuanzhouzheyu@outlook.com" title="E-Mail → mailto:guangyuanzhouzheyu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/althenwaysatan" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;althenwaysatan" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/AlthenWaySatan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5862576360" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5862576360" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=2469265056&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;2469265056&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://ferric.top/" title="http:&#x2F;&#x2F;ferric.top&#x2F;" rel="noopener" target="_blank">FerricIon</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <a href="/">
+    <div class="back-to-home" role="button">
+      <i class="fa fa-home"></i>
+    </div>
+  </a>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://althenwaysatan.github.io/2018/12/29/OI%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%9F%A9%E9%98%B5%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="周道">
+      <meta itemprop="description" content="⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Althen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OI中常见的线性代数矩阵问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-29 14:18:02" itemprop="dateCreated datePublished" datetime="2018-12-29T14:18:02+08:00">2018-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-14 12:06:00" itemprop="dateModified" datetime="2022-02-14T12:06:00+08:00">2022-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>$\ \ \ \ \ \ \ \,$关于OI中常见的线性代数矩阵问题的复习笔记：</p>
+<span id="more"></span>
+<p>$\ \ \ \ \ \ \,$对于一个 $n\times m$ 的矩阵 $A$，我们这样定义：</p>
+<p>$ A=\begin{bmatrix} a_{(1,1)} &amp;  a_{(1,2)} &amp;\cdots &amp;a_{(1,n)} \\  a_{(2,1)}&amp;  a_{(2,2)} &amp;\cdots &amp;a_{(2,n)} \\\vdots &amp;\vdots &amp;\ddots &amp;\vdots\\  a_{(m,1)}&amp;  a_{(m,2)} &amp;\cdots &amp;a_{(m,n)}  \end{bmatrix} $</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">matrix</span>&#123;	</span><br><span class="line">	<span class="type">int</span> n,m;</span><br><span class="line">	<span class="type">double</span> a[N][N];</span><br><span class="line">&#125;A;</span><br></pre></td></tr></table></figure>
+<h2 id="高斯消元"><a href="#高斯消元" class="headerlink" title="高斯消元"></a>高斯消元</h2><p>$\ \ \ \ \ \ \,$回忆初中学的多元一次方程（线性方程），我们可以把它当做一个矩阵，然后等号的后面为 $n\times 1$ 的增广矩阵。</p>
+<p>$\ \ \ \ \ \ \,$我们解答的过程，就是用方程之间的加减，或者乘一个常数，来消去一些未知数，直到可以直接解出答案。这个消元过程，就是高斯消元。</p>
+<p>$\ \ \ \ \ \ \,$变换到矩阵上面，就是通过一些行与行之间的加减，或者乘一个常数，来使得一些位置的值变为 $0$ 。</p>
+<p>$\ \ \ \ \ \ \,$我们一般会画成下面两种形态：</p>
+<ol>
+<li><p>行阶梯式</p>
+<p>$ \begin{bmatrix} a &amp;  a &amp;a \\  0&amp;  a &amp;a \\0&amp;  0 &amp;a  \end{bmatrix} $</p>
+<p>$\ \ \ \ \ \ \,$代码如下，复杂度$O(n^3)$</p>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Gauss</span><span class="params">(matrix &amp;A)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=A.n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;=A.m;j++)</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">fabs</span>(A.a[j][i]))&#123;<span class="built_in">swap</span>(A.a[j],A.a[i]);<span class="keyword">break</span>;&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i+<span class="number">1</span>;j&lt;=A.m;j++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">fabs</span>(A.a[i][i])&lt;eps)<span class="keyword">continue</span>;</span><br><span class="line">		<span class="type">double</span> f=A.a[j][i]/A.a[i][i];</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> k=i;k&lt;=A.n;k++)A.a[j][k]-=f*A.a[i][k];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>行最简式</p>
+<p>$ \begin{bmatrix} a &amp;  0 &amp;0 \\  0&amp;  a &amp;0 \\0&amp;  0 &amp;a\end{bmatrix} $</p>
+<p>$\ \ \ \ \ \ \,$代码如下，在化成行阶梯式之后，再化成行最简式，复杂度$O(n^3)$</p>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Gauss</span><span class="params">(matrix &amp;A)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=A.n;i++)&#123;</span><br><span class="line"> 		<span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;=A.m;j++)</span><br><span class="line"> 		<span class="keyword">if</span>(<span class="built_in">fabs</span>(A.a[j][i]))&#123;<span class="built_in">swap</span>(A.a[j],A.a[i]);<span class="keyword">break</span>;&#125;</span><br><span class="line"> 		<span class="keyword">for</span>(<span class="type">int</span> j=i+<span class="number">1</span>;j&lt;=A.m;j++)&#123;</span><br><span class="line"> 			<span class="keyword">if</span>(<span class="built_in">fabs</span>(A.a[i][i])&lt;eps)<span class="keyword">continue</span>;</span><br><span class="line"> 			<span class="type">double</span> f=A.a[j][i]/A.a[i][i];</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> k=i;k&lt;=A.n;k++)A.a[j][k]-=f*A.a[i][k];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=A.n;i&gt;=<span class="number">1</span>;i--)</span><br><span class="line"> 	<span class="keyword">for</span>(<span class="type">int</span> j=i<span class="number">-1</span>;j&gt;=<span class="number">1</span>;j--)&#123;</span><br><span class="line"> 		<span class="keyword">if</span>(<span class="built_in">fabs</span>(A.a[j][i])&lt;eps)<span class="keyword">continue</span>;</span><br><span class="line"> 		<span class="type">double</span> f=-A.a[i][i]/A.a[j][i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=j;k&lt;=A.n;k++)</span><br><span class="line">    (A.a[j][k]*=f)+=A.a[i][k];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="矩阵的秩和行列式的值"><a href="#矩阵的秩和行列式的值" class="headerlink" title="矩阵的秩和行列式的值"></a>矩阵的秩和行列式的值</h2><ol>
+<li>矩阵的秩</li>
+</ol>
+<p>$\ \ \ \ \ \ \,$矩阵的秩是A的线性独立的纵（横）列的极大数目，感性地理解，就是在线性方程里的非自由元数目，也就是有用的为多少，我们可以在高斯消元的同时，来求矩阵的秩。</p>
+<p>$\ \ \ \ \ \ \ \,$也就是统计行阶梯式的对角线上，不为 $0$ 的数目。</p>
+<ol>
+<li>行列式的值</li>
+</ol>
+<p>$\ \ \ \ \ \ \,$行列式虽然与矩阵不同，但是也可以用矩阵表示，暴力求行列式的值复杂度太高，但是我们可以高斯消元过后再求。</p>
+<p>$\ \ \ \ \ \ \,$就是行阶梯式的对角线的乘积。</p>
+<h2 id="矩阵乘法"><a href="#矩阵乘法" class="headerlink" title="矩阵乘法"></a>矩阵乘法</h2><p>$\ \ \ \ \ \ \,$那么对于矩阵之间的乘法 $B\times A$，我们这样定义：</p>
+<p>$\ \ \ \ \ \ \,$首先，我们需要确定，$B$ 的列数等于$A$ 的行数，既$m_A=n_B$。</p>
+<p>$\ \ \ \ \ \ \,$令$S_{(i,j)}=\sum_{k=1}^{m_A}a_{(k,j)}\times b_{(i,k)}$，那么有：</p>
+<p>$B\times A=\begin{bmatrix} S_{(1,1)} &amp;  S_{(1,2)} &amp;\cdots &amp;S_{(1,n_A)} \\  S_{(2,1)}&amp;  S_{(2,2)} &amp;\cdots &amp;S_{(2,n_A)} \\\vdots &amp;\vdots &amp;\ddots &amp;\vdots\\  S_{(m_B,1)}&amp;  S_{(m_B,2)} &amp;\cdots &amp;S_{(m_B,n_A)}  \end{bmatrix} $</p>
+<p>$\ \ \ \ \ \ \,$显然是一定满足结合律，不一定满足交换律的，复杂度为$O(n^3)$，直接模拟的，代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> matrix <span class="keyword">operator</span> *(<span class="type">const</span> matrix &amp;a,<span class="type">const</span> matrix &amp;b)&#123;</span><br><span class="line">	matrix ret;ret.n=a.n;ret.m=b.m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=a.n;i++)</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=b.m;j++)&#123;</span><br><span class="line">	  ret.a[i][j]=<span class="number">0</span>;</span><br><span class="line">	  <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">1</span>;k&lt;=a.m;k++)</span><br><span class="line">	  ret.a[i][j]+=a.a[i][k]*b.a[k][j];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="矩阵逆元"><a href="#矩阵逆元" class="headerlink" title="矩阵逆元"></a>矩阵逆元</h2><p>$\ \ \ \ \ \ \,$有矩阵乘法，那么就会存在单位元，那么就自然会有逆元的存在。</p>
+<p>$\ \ \ \ \ \ \,$单位矩阵，既对角线上面都是 $1$，其余都是 $0$ 的矩阵：</p>
+<p>$ I=\begin{bmatrix} 1 &amp;  0 &amp;\cdots &amp;0 \\  0&amp;  1 &amp;\cdots &amp;0 \\\vdots &amp;\vdots &amp;\ddots &amp;\vdots\\  0&amp;  0 &amp;\cdots &amp;1  \end{bmatrix} $</p>
+<p>$\ \ \ \ \ \ \,$根据矩阵乘法的定义，很容易知道$A\times I=A$。</p>
+<p>$\ \ \ \ \ \ \,$那么对于矩阵$A$，若是$A\times A’=I$，我们就称 $A’$ 为 $A$ 的逆矩阵。</p>
+<p>$\ \ \ \ \ \ \,$对于一个矩阵$A$，肯定可以通过一些行与行之间的加减，或者乘一个常数，既高斯消元，变成 $I$。那么我们令$B=I$，同时和$A$做高斯消元，那么当$A=I$时，$B=A’$了。</p>
+<p>$\ \ \ \ \ \ \,$模板如下，返回$0$是无逆元情况：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">Inv</span><span class="params">(matrix A,matrix &amp;B)</span></span>&#123;</span><br><span class="line">	B.n=A.n;B.m=A.m;</span><br><span class="line">	<span class="built_in">memset</span>(B.a,<span class="number">0</span>,<span class="built_in">sizeof</span>(B.a));</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=A.n;i++)B.a[i][i]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=A.n;i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;=A.n;j++)</span><br><span class="line">    <span class="keyword">if</span>(A.a[j][i])&#123;</span><br><span class="line">      <span class="built_in">swap</span>(A.a[i],A.a[j]);</span><br><span class="line">			<span class="built_in">swap</span>(B.a[i],B.a[j]);</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!A.a[i][i])<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> r=<span class="built_in">inv</span>(A.a[i][i]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;=A.n;j++)A.a[i][j]=A.a[i][j]*r%mod;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=A.n;j++)B.a[i][j]=B.a[i][j]*r%mod;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=A.n;j++)</span><br><span class="line">    <span class="keyword">if</span>(j!=i)&#123;</span><br><span class="line">      <span class="type">long</span> <span class="type">long</span> f=A.a[j][i];</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> k=i;k&lt;=A.n;k++)</span><br><span class="line">      A.a[j][k]=(A.a[j][k]-f*A.a[i][k]%mod+mod)%mod;</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">1</span>;k&lt;=A.n;k++)</span><br><span class="line">      B.a[j][k]=(B.a[j][k]-f*B.a[i][k]%mod+mod)%mod;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OI/" rel="tag"># OI</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95/" rel="tag"># 矩阵乘法</a>
+              <a href="/tags/%E7%9F%A9%E9%98%B5%E6%B1%82%E9%80%86/" rel="tag"># 矩阵求逆</a>
+              <a href="/tags/%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83/" rel="tag"># 高斯消元</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/12/29/%E6%9C%80%E7%9F%AD%E8%B7%AF-%E7%94%9F%E6%88%90%E6%A0%91%E5%92%8C%E7%94%9F%E6%88%90%E6%A0%91%E5%BD%A2%E5%9B%BE%E7%9B%B8%E5%85%B3/" rel="prev" title="最短路，生成树和生成树形图相关">
+                  <i class="fa fa-chevron-left"></i> 最短路，生成树和生成树形图相关
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/29/%E5%85%B3%E4%BA%8EDP%E7%9A%84%E4%BC%98%E5%8C%96/" rel="next" title="关于DP的优化">
+                  关于DP的优化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">周道</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

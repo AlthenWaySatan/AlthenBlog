@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"althenwaysatan.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="$\ \ \ \ \ \ \ \,$关于Splay操作的复习笔记： $\ \ \ \ \ \ \ \,$一些平衡树操作和都是一样的，详见【Splay各种操作模板大赏】。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FhqTreap各种操作模板大赏">
+<meta property="og:url" content="https://althenwaysatan.github.io/2019/01/06/FhqTreap%E5%90%84%E7%A7%8D%E6%93%8D%E4%BD%9C%E6%A8%A1%E6%9D%BF%E5%A4%A7%E8%B5%8F/index.html">
+<meta property="og:site_name" content="Althen&#39;s Blog">
+<meta property="og:description" content="$\ \ \ \ \ \ \ \,$关于Splay操作的复习笔记： $\ \ \ \ \ \ \ \,$一些平衡树操作和都是一样的，详见【Splay各种操作模板大赏】。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-01-06T10:19:42.000Z">
+<meta property="article:modified_time" content="2022-02-13T14:05:59.128Z">
+<meta property="article:author" content="周道">
+<meta property="article:tag" content="OI">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="字符串">
+<meta property="article:tag" content="平衡树">
+<meta property="article:tag" content="Fhq_Treap">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://althenwaysatan.github.io/2019/01/06/FhqTreap%E5%90%84%E7%A7%8D%E6%93%8D%E4%BD%9C%E6%A8%A1%E6%9D%BF%E5%A4%A7%E8%B5%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://althenwaysatan.github.io/2019/01/06/FhqTreap%E5%90%84%E7%A7%8D%E6%93%8D%E4%BD%9C%E6%A8%A1%E6%9D%BF%E5%A4%A7%E8%B5%8F/","path":"2019/01/06/FhqTreap各种操作模板大赏/","title":"FhqTreap各种操作模板大赏"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>FhqTreap各种操作模板大赏 | Althen's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Althen's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">周道的个人博客，记录学习历程，目前正在逐步完善中</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/contentimg/beatheart.html" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9"><span class="nav-number">3.</span> <span class="nav-text">修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%A2%E9%97%AE"><span class="nav-number">4.</span> <span class="nav-text">询问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E6%A8%A1%E6%9D%BF%E9%A2%98%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">两个模板题：</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="周道"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">周道</p>
+  <div class="site-description" itemprop="description">⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AlthenWaySatan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:guangyuanzhouzheyu@outlook.com" title="E-Mail → mailto:guangyuanzhouzheyu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/althenwaysatan" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;althenwaysatan" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/AlthenWaySatan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5862576360" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5862576360" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=2469265056&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;2469265056&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://ferric.top/" title="http:&#x2F;&#x2F;ferric.top&#x2F;" rel="noopener" target="_blank">FerricIon</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <a href="/">
+    <div class="back-to-home" role="button">
+      <i class="fa fa-home"></i>
+    </div>
+  </a>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://althenwaysatan.github.io/2019/01/06/FhqTreap%E5%90%84%E7%A7%8D%E6%93%8D%E4%BD%9C%E6%A8%A1%E6%9D%BF%E5%A4%A7%E8%B5%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="周道">
+      <meta itemprop="description" content="⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Althen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FhqTreap各种操作模板大赏
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-01-06 18:19:42" itemprop="dateCreated datePublished" datetime="2019-01-06T18:19:42+08:00">2019-01-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-13 22:05:59" itemprop="dateModified" datetime="2022-02-13T22:05:59+08:00">2022-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>$\ \ \ \ \ \ \ \,$关于Splay操作的复习笔记：</p>
+<p>$\ \ \ \ \ \ \ \,$一些平衡树操作和都是一样的，详见<a href="/2019/01/05/Splay各种操作模板大赏/">【Splay各种操作模板大赏】</a>。</p>
+<span id="more"></span>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">fhq_Treap</span>&#123;</span><br><span class="line">	<span class="meta">#<span class="keyword">define</span> lson ls[rt]</span></span><br><span class="line">	<span class="meta">#<span class="keyword">define</span> rson rs[rt]</span></span><br><span class="line">  	<span class="type">int</span> size[N],key[N],sum[N],val[N];</span><br><span class="line">  	<span class="type">int</span> ls[N],rs[N],cnt;</span><br><span class="line">  	<span class="type">int</span> root;</span><br><span class="line">  	<span class="type">bool</span> lazy[N];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>$\tt root$ ：根；</li>
+<li>$\tt cnt$ ：下标大小；</li>
+<li>$\tt key[]$ ：关键值；</li>
+<li>$\tt ls[]\&amp;rs[]$ ：左右儿子；</li>
+<li>$\tt sum[]$ ：子树权值；</li>
+<li>$\tt val[]$ ：节点权值；</li>
+<li>$\tt size[]$ ：节点大小；</li>
+<li>$\tt lazy[]$ ：下传标记。</li>
+</ol>
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><ul>
+<li>手写随机($Rand$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Rand</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> seed=<span class="number">233</span>;</span><br><span class="line">    <span class="keyword">return</span> seed=<span class="built_in">int</span>(seed*<span class="number">48271LL</span>%<span class="number">20020207</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>标记上传 ($pushup$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">pushup</span><span class="params">(<span class="type">int</span> rt)</span></span>&#123;</span><br><span class="line">	size[rt]=size[lson]+size[rson]+<span class="number">1</span>;</span><br><span class="line">	sum[rt]=sum[lson]+sum[rson]+val[rt];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>标记下传 ($pushdown$)，根据情况会不一样<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">pushdown</span><span class="params">(<span class="type">int</span> rt)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(!lazy[rt])<span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">swap</span>(lson,rson);</span><br><span class="line">    lazy[lson]^=<span class="number">1</span>;lazy[rson]^=<span class="number">1</span>;</span><br><span class="line">    lazy[rt]=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>分裂($split$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//权值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">split</span><span class="params">(<span class="type">int</span> rt,<span class="type">int</span> x,<span class="type">int</span> &amp;a,<span class="type">int</span> &amp;b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!rt) a=<span class="number">0</span>,b=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">    	<span class="built_in">pushdown</span>(rt);</span><br><span class="line">      	<span class="keyword">if</span>(val[rt]&lt;=x)a=rt,<span class="built_in">split</span>(rson,x,rs[a],b);</span><br><span class="line">      	<span class="keyword">else</span> b=rt,<span class="built_in">split</span>(lson,x,a,ls[b]);</span><br><span class="line">      	<span class="built_in">pushup</span>(rt);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//位置</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">split</span><span class="params">(<span class="type">int</span> rt,<span class="type">int</span> x,<span class="type">int</span> &amp;a,<span class="type">int</span> &amp;b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!rt) a=<span class="number">0</span>,b=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">    	<span class="built_in">pushdown</span>(rt);</span><br><span class="line">    	<span class="keyword">if</span>(size[ls[rt]]&lt;x)a=rt,<span class="built_in">split</span>(rson,x-size[ls[rt]]<span class="number">-1</span>,rs[a],b);</span><br><span class="line">      	<span class="keyword">else</span> b=rt,<span class="built_in">split</span>(lson,x,a,ls[b]);</span><br><span class="line">      	<span class="built_in">pushup</span>(rt);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>合并($merge$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!x||!y) <span class="keyword">return</span> x+y;</span><br><span class="line">    <span class="keyword">if</span>(key[x]&lt;key[y])&#123;<span class="built_in">pushdown</span>(x);rs[x]=<span class="built_in">merge</span>(rs[x],y);<span class="built_in">pushup</span>(x);<span class="keyword">return</span> x;&#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;<span class="built_in">pushdown</span>(y);ls[y]=<span class="built_in">merge</span>(x,ls[y]);<span class="built_in">pushup</span>(y);<span class="keyword">return</span> y;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h2><ul>
+<li>新建节点 ($newnode$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">newnode</span><span class="params">(<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">  	sum[++cnt]=val[cnt]=v;size[cnt]=<span class="number">1</span>;key[cnt]=<span class="built_in">Rand</span>();</span><br><span class="line">  	<span class="keyword">return</span> cnt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>插入($Insert$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Insert</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a,b;</span><br><span class="line">    <span class="built_in">split</span>(root,x,a,b);</span><br><span class="line">    <span class="type">int</span> rt=<span class="built_in">newnode</span>(v);</span><br><span class="line">    root=<span class="built_in">merge</span>(<span class="built_in">merge</span>(a,rt),b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>删除($Delete$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Delete</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a,b,c;</span><br><span class="line">    <span class="built_in">split</span>(root,x,a,b);<span class="built_in">split</span>(a,x<span class="number">-1</span>,a,c);</span><br><span class="line">    c=<span class="built_in">merge</span>(ls[c],rs[c]);</span><br><span class="line">    root=<span class="built_in">merge</span>(<span class="built_in">merge</span>(a,c),b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>区间修改（翻转）($revse$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Reverse</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x,y,z;</span><br><span class="line">    <span class="built_in">split</span>(root,r,x,z);</span><br><span class="line">    <span class="built_in">split</span>(x,l<span class="number">-1</span>,x,y);</span><br><span class="line">    lazy[y]^=<span class="number">1</span>;</span><br><span class="line">    root=<span class="built_in">merge</span>(<span class="built_in">merge</span>(x,y),z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="询问"><a href="#询问" class="headerlink" title="询问"></a>询问</h2><ul>
+<li><p>查找排名第k的值($QueryRank$)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">QueryRank</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> rt=root;</span><br><span class="line">    <span class="keyword">while</span>(rt)&#123;</span><br><span class="line">      	<span class="keyword">if</span>(x==size[lson]+<span class="number">1</span>)<span class="keyword">return</span> val[rt];</span><br><span class="line">      	<span class="keyword">if</span>(size[lson]&gt;=x)rt=lson;</span><br><span class="line">      	<span class="keyword">else</span> x-=size[lson]+<span class="number">1</span>,rt=rson;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找某个值的排名($Rank$)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Rank</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> rt=root,res=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(rt)&#123;</span><br><span class="line">    	<span class="keyword">if</span>(val[rt]&gt;=x)rt=lson;</span><br><span class="line">    	<span class="keyword">else</span> res+=size[lson]+<span class="number">1</span>,rt=rson;</span><br><span class="line">  	&#125;</span><br><span class="line">  	<span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>前驱($Numpre$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Numpre</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;<span class="keyword">return</span> <span class="built_in">QueryRank</span>(<span class="built_in">Rank</span>(x)<span class="number">-1</span>);&#125;</span><br></pre></td></tr></table></figure></li>
+<li>后继($Numnex$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Numnex</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;<span class="keyword">return</span> <span class="built_in">QueryRank</span>(<span class="built_in">Rank</span>(x+<span class="number">1</span>));&#125;</span><br></pre></td></tr></table></figure></li>
+<li>区间查询（权值和）($Numnex$)<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">Query</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x,y,z;</span><br><span class="line">    <span class="built_in">split</span>(root,r,x,z);</span><br><span class="line">    <span class="built_in">split</span>(x,l<span class="number">-1</span>,x,y);</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> ans=sum[y];</span><br><span class="line">    root=<span class="built_in">merge</span>(<span class="built_in">merge</span>(x,y),z);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="两个模板题："><a href="#两个模板题：" class="headerlink" title="两个模板题："></a>两个模板题：</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P3369">P3369 【模板】普通平衡树</a><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// luogu-judger-enable-o2</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> inf=<span class="number">0x7fffffff</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eps=<span class="number">1e-10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi=<span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="comment">//char buf[1&lt;&lt;15],*S=buf,*T=buf;</span></span><br><span class="line"><span class="comment">//char getch()&#123;return S==T&amp;&amp;(T=(S=buf)+fread(buf,1,1&lt;&lt;15,stdin),S==T)?0:*S++;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="type">char</span> ch;ch=<span class="built_in">getchar</span>();</span><br><span class="line">    <span class="keyword">while</span>(ch&lt;<span class="string">&#x27;0&#x27;</span>||ch&gt;<span class="string">&#x27;9&#x27;</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>) f=<span class="number">0</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">    <span class="keyword">while</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch&amp;<span class="number">15</span>);ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">    <span class="keyword">if</span>(f)<span class="keyword">return</span> x;<span class="keyword">else</span> <span class="keyword">return</span> -x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">fhq_Treap</span>&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> lson ls[rt]</span></span><br><span class="line">    <span class="meta">#<span class="keyword">define</span> rson rs[rt]</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">Rand</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> seed=<span class="number">233</span>;</span><br><span class="line">    <span class="keyword">return</span> seed=<span class="built_in">int</span>(seed*<span class="number">48271LL</span>%<span class="number">20020207</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> size[N],key[N],val[N];</span><br><span class="line">  <span class="type">int</span> ls[N],rs[N],cnt,sum[N];</span><br><span class="line">  <span class="type">int</span> root;</span><br><span class="line">  <span class="type">bool</span> lazy[N];</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">pushup</span><span class="params">(<span class="type">int</span> rt)</span></span>&#123;</span><br><span class="line">        size[rt]=size[lson]+size[rson]+<span class="number">1</span>;</span><br><span class="line">        sum[rt]=sum[lson]+sum[rson]+val[rt];</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">clone</span><span class="params">(<span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">  	++cnt;</span><br><span class="line">    size[cnt]=size[b];key[cnt]=key[b];val[cnt]=val[b];</span><br><span class="line">    ls[cnt]=ls[b];rs[cnt]=rs[b],lazy[cnt]=lazy[b];sum[cnt]=sum[b];</span><br><span class="line">    <span class="keyword">return</span> cnt;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">pushdown</span><span class="params">(<span class="type">int</span> rt)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!lazy[rt])<span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">swap</span>(lson,rson);</span><br><span class="line">    lazy[lson]^=<span class="number">1</span>;lazy[rson]^=<span class="number">1</span>;</span><br><span class="line">    lazy[rt]=<span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!x||!y) <span class="keyword">return</span> x+y;</span><br><span class="line">    <span class="keyword">if</span>(key[x]&lt;key[y])&#123;<span class="built_in">pushdown</span>(x);rs[x]=<span class="built_in">merge</span>(rs[x],y);<span class="built_in">pushup</span>(x);<span class="keyword">return</span> x;&#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;<span class="built_in">pushdown</span>(y);ls[y]=<span class="built_in">merge</span>(x,ls[y]);<span class="built_in">pushup</span>(y);<span class="keyword">return</span> y;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//权值</span></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">split</span><span class="params">(<span class="type">int</span> rt,<span class="type">int</span> x,<span class="type">int</span> &amp;a,<span class="type">int</span> &amp;b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!rt) a=<span class="number">0</span>,b=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">    	<span class="built_in">pushdown</span>(rt);</span><br><span class="line">      <span class="keyword">if</span>(val[rt]&lt;=x)a=rt,<span class="built_in">split</span>(rson,x,rs[a],b);</span><br><span class="line">      <span class="keyword">else</span> b=rt,<span class="built_in">split</span>(lson,x,a,ls[b]);</span><br><span class="line">      <span class="built_in">pushup</span>(rt);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">Insert</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a,b;</span><br><span class="line">    <span class="built_in">split</span>(root,x,a,b);</span><br><span class="line">    val[++cnt]=x;size[cnt]=<span class="number">1</span>;key[cnt]=<span class="built_in">Rand</span>();</span><br><span class="line">    root=<span class="built_in">merge</span>(<span class="built_in">merge</span>(a,cnt),b);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">Delete</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a,b,c;</span><br><span class="line">    <span class="built_in">split</span>(root,x,a,b);<span class="built_in">split</span>(a,x<span class="number">-1</span>,a,c);</span><br><span class="line">    c=<span class="built_in">merge</span>(ls[c],rs[c]);</span><br><span class="line">    root=<span class="built_in">merge</span>(<span class="built_in">merge</span>(a,c),b);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">Rank</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> rt=root,res=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(rt)&#123;</span><br><span class="line">    	<span class="keyword">if</span>(val[rt]&gt;=x)rt=lson;</span><br><span class="line">    	<span class="keyword">else</span> res+=size[lson]+<span class="number">1</span>,rt=rson;</span><br><span class="line">  	&#125;</span><br><span class="line">  	<span class="keyword">return</span> res;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">QueryRank</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> rt=root;</span><br><span class="line">    <span class="keyword">while</span>(rt)&#123;</span><br><span class="line">      <span class="keyword">if</span>(x==size[lson]+<span class="number">1</span>)<span class="keyword">return</span> val[rt];</span><br><span class="line">      <span class="keyword">if</span>(size[lson]&gt;=x)rt=lson;</span><br><span class="line">      <span class="keyword">else</span> x-=size[lson]+<span class="number">1</span>,rt=rson;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">Numpre</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;<span class="keyword">return</span> <span class="built_in">QueryRank</span>(<span class="built_in">Rank</span>(x)<span class="number">-1</span>);&#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">Numnex</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;<span class="keyword">return</span> <span class="built_in">QueryRank</span>(<span class="built_in">Rank</span>(x+<span class="number">1</span>));&#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">Reverse</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x,y,z;</span><br><span class="line">    <span class="built_in">split</span>(root,r,x,z);</span><br><span class="line">    <span class="built_in">split</span>(x,l<span class="number">-1</span>,x,y);</span><br><span class="line">    lazy[y]^=<span class="number">1</span>;</span><br><span class="line">    root=<span class="built_in">merge</span>(<span class="built_in">merge</span>(x,y),z);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">Query</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x,y,z;</span><br><span class="line">    <span class="built_in">split</span>(root,r,x,z);</span><br><span class="line">    <span class="built_in">split</span>(x,l<span class="number">-1</span>,x,y);</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> ans=sum[y];</span><br><span class="line">    root=<span class="built_in">merge</span>(<span class="built_in">merge</span>(x,y),z);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;Fhq;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">int</span> n=<span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">while</span>(n--)&#123;</span><br><span class="line">    <span class="type">int</span> opt=<span class="built_in">read</span>(),x=<span class="built_in">read</span>();</span><br><span class="line">    <span class="keyword">if</span>(opt==<span class="number">1</span>)&#123;Fhq.<span class="built_in">Insert</span>(x);<span class="keyword">continue</span>;&#125;</span><br><span class="line">    <span class="keyword">if</span>(opt==<span class="number">2</span>)&#123;Fhq.<span class="built_in">Delete</span>(x);<span class="keyword">continue</span>;&#125;</span><br><span class="line">    <span class="keyword">if</span>(opt==<span class="number">3</span>)&#123;<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,Fhq.<span class="built_in">Rank</span>(x));<span class="keyword">continue</span>;&#125;</span><br><span class="line">    <span class="keyword">if</span>(opt==<span class="number">4</span>)&#123;<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,Fhq.<span class="built_in">QueryRank</span>(x));<span class="keyword">continue</span>;&#125;</span><br><span class="line">    <span class="keyword">if</span>(opt==<span class="number">5</span>)&#123;<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,Fhq.<span class="built_in">Numpre</span>(x));<span class="keyword">continue</span>;&#125;</span><br><span class="line">    <span class="keyword">if</span>(opt==<span class="number">6</span>)&#123;<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,Fhq.<span class="built_in">Numnex</span>(x));<span class="keyword">continue</span>;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P3391">P3391 【模板】文艺平衡树（Splay）</a><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> inf=<span class="number">0x7fffffff</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eps=<span class="number">1e-10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi=<span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="comment">//char buf[1&lt;&lt;15],*S=buf,*T=buf;</span></span><br><span class="line"><span class="comment">//char getch()&#123;return S==T&amp;&amp;(T=(S=buf)+fread(buf,1,1&lt;&lt;15,stdin),S==T)?0:*S++;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="type">char</span> ch;ch=<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">while</span>(ch&lt;<span class="string">&#x27;0&#x27;</span>||ch&gt;<span class="string">&#x27;9&#x27;</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>) f=<span class="number">0</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">	<span class="keyword">while</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch&amp;<span class="number">15</span>);ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">	<span class="keyword">if</span>(f)<span class="keyword">return</span> x;<span class="keyword">else</span> <span class="keyword">return</span> -x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> a[N],n,m;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">fhq_Treap</span>&#123;</span><br><span class="line">	<span class="meta">#<span class="keyword">define</span> lson ls[rt]</span></span><br><span class="line">	<span class="meta">#<span class="keyword">define</span> rson rs[rt]</span></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">Rand</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> seed=<span class="number">233</span>;</span><br><span class="line">    <span class="keyword">return</span> seed=<span class="built_in">int</span>(seed*<span class="number">48271LL</span>%<span class="number">20020207</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="type">int</span> size[N],key[N],val[N],w[N];</span><br><span class="line">  <span class="type">int</span> ls[N],rs[N],cnt;</span><br><span class="line">  <span class="type">int</span> root;</span><br><span class="line">  <span class="type">bool</span> lazy[N];</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">pushup</span><span class="params">(<span class="type">int</span> rt)</span></span>&#123;</span><br><span class="line">		size[rt]=size[lson]+size[rson]+<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">pushdown</span><span class="params">(<span class="type">int</span> rt)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!lazy[rt])<span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">swap</span>(lson,rson);</span><br><span class="line">    lazy[lson]^=<span class="number">1</span>;lazy[rson]^=<span class="number">1</span>;</span><br><span class="line">    lazy[rt]=<span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!x||!y) <span class="keyword">return</span> x+y;</span><br><span class="line">    <span class="keyword">if</span>(key[x]&lt;key[y])&#123;<span class="built_in">pushdown</span>(x);rs[x]=<span class="built_in">merge</span>(rs[x],y);<span class="built_in">pushup</span>(x);<span class="keyword">return</span> x;&#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;<span class="built_in">pushdown</span>(y);ls[y]=<span class="built_in">merge</span>(x,ls[y]);<span class="built_in">pushup</span>(y);<span class="keyword">return</span> y;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//位置</span></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">split</span><span class="params">(<span class="type">int</span> rt,<span class="type">int</span> x,<span class="type">int</span> &amp;a,<span class="type">int</span> &amp;b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!rt) a=<span class="number">0</span>,b=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">    	<span class="built_in">pushdown</span>(rt);</span><br><span class="line">    	<span class="keyword">if</span>(size[ls[rt]]&lt;x)a=rt,<span class="built_in">split</span>(rson,x-size[ls[rt]]<span class="number">-1</span>,rs[a],b);</span><br><span class="line">      <span class="keyword">else</span> b=rt,<span class="built_in">split</span>(lson,x,a,ls[b]);</span><br><span class="line">      <span class="built_in">pushup</span>(rt);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Insert</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> v)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a,b;</span><br><span class="line">    <span class="built_in">split</span>(root,x,a,b);++cnt;</span><br><span class="line">    val[cnt]=v;size[cnt]=<span class="number">1</span>;key[cnt]=<span class="built_in">Rand</span>();</span><br><span class="line">    root=<span class="built_in">merge</span>(<span class="built_in">merge</span>(a,cnt),b);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">Reverse</span><span class="params">(<span class="type">int</span> l,<span class="type">int</span> r)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x,y,z;</span><br><span class="line">    <span class="built_in">split</span>(root,r,x,z);</span><br><span class="line">    <span class="built_in">split</span>(x,l<span class="number">-1</span>,x,y);</span><br><span class="line">    lazy[y]^=<span class="number">1</span>;</span><br><span class="line">    root=<span class="built_in">merge</span>(<span class="built_in">merge</span>(x,y),z);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;Fhq;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">write</span><span class="params">(<span class="type">int</span> rt)</span></span>&#123;</span><br><span class="line">  Fhq.<span class="built_in">pushdown</span>(rt);</span><br><span class="line">  <span class="keyword">if</span>(Fhq.lson)<span class="built_in">write</span>(Fhq.lson);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,Fhq.val[rt]);</span><br><span class="line">  <span class="keyword">if</span>(Fhq.rson)<span class="built_in">write</span>(Fhq.rson); </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  n=<span class="built_in">read</span>();m=<span class="built_in">read</span>();</span><br><span class="line"> 	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)Fhq.<span class="built_in">Insert</span>(i<span class="number">-1</span>,i);</span><br><span class="line"> 	<span class="keyword">while</span>(m--)&#123;</span><br><span class="line">    <span class="type">int</span> l=<span class="built_in">read</span>(),r=<span class="built_in">read</span>();</span><br><span class="line">  	Fhq.<span class="built_in">Reverse</span>(l,r);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">write</span>(Fhq.root);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OI/" rel="tag"># OI</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+              <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag"># 字符串</a>
+              <a href="/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" rel="tag"># 平衡树</a>
+              <a href="/tags/Fhq-Treap/" rel="tag"># Fhq_Treap</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/05/Splay%E5%90%84%E7%A7%8D%E6%93%8D%E4%BD%9C%E6%A8%A1%E6%9D%BF%E5%A4%A7%E8%B5%8F/" rel="prev" title="Splay各种操作模板大赏">
+                  <i class="fa fa-chevron-left"></i> Splay各种操作模板大赏
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/02/13/SCOI2016-Day1%E5%88%9D%E7%95%A5%E9%A2%98%E8%A7%A3/" rel="next" title="【SCOI2016】Day1初略题解">
+                  【SCOI2016】Day1初略题解 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">周道</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"althenwaysatan.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="$\ \ \ \ \ \ \ \,$图论基础复习笔记：">
+<meta property="og:type" content="website">
+<meta property="og:title" content="最短路，生成树和生成树形图相关">
+<meta property="og:url" content="https://althenwaysatan.github.io/2018/12/29/%E6%9C%80%E7%9F%AD%E8%B7%AF-%E7%94%9F%E6%88%90%E6%A0%91%E5%92%8C%E7%94%9F%E6%88%90%E6%A0%91%E5%BD%A2%E5%9B%BE%E7%9B%B8%E5%85%B3/index.html">
+<meta property="og:site_name" content="Althen&#39;s Blog">
+<meta property="og:description" content="$\ \ \ \ \ \ \ \,$图论基础复习笔记：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/b5fbfbb3e6872794a624ca4947d868ae.png">
+<meta property="article:published_time" content="2018-12-29T06:12:34.000Z">
+<meta property="article:modified_time" content="2022-02-13T12:37:06.549Z">
+<meta property="article:author" content="周道">
+<meta property="article:tag" content="OI">
+<meta property="article:tag" content="图论">
+<meta property="article:tag" content="最短路">
+<meta property="article:tag" content="生成树形图">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/b5fbfbb3e6872794a624ca4947d868ae.png">
+
+
+<link rel="canonical" href="https://althenwaysatan.github.io/2018/12/29/%E6%9C%80%E7%9F%AD%E8%B7%AF-%E7%94%9F%E6%88%90%E6%A0%91%E5%92%8C%E7%94%9F%E6%88%90%E6%A0%91%E5%BD%A2%E5%9B%BE%E7%9B%B8%E5%85%B3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://althenwaysatan.github.io/2018/12/29/%E6%9C%80%E7%9F%AD%E8%B7%AF-%E7%94%9F%E6%88%90%E6%A0%91%E5%92%8C%E7%94%9F%E6%88%90%E6%A0%91%E5%BD%A2%E5%9B%BE%E7%9B%B8%E5%85%B3/","path":"2018/12/29/最短路-生成树和生成树形图相关/","title":"最短路，生成树和生成树形图相关"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>最短路，生成树和生成树形图相关 | Althen's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Althen's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">周道的个人博客，记录学习历程，目前正在逐步完善中</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/contentimg/beatheart.html" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%9B%BE%E7%9B%B8%E5%85%B3"><span class="nav-number">1.</span> <span class="nav-text">存图相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%82%BB%E6%8E%A5%E8%A1%A8%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">1.邻接表：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%93%BE%E8%A1%A8%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">2. 链表：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84"><span class="nav-number">1.3.</span> <span class="nav-text">3.动态数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%9F%AD%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">最短路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Floyd"><span class="nav-number">2.1.</span> <span class="nav-text">1.Floyd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-SPFA"><span class="nav-number">2.2.</span> <span class="nav-text">2.SPFA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Dijkstra"><span class="nav-number">2.3.</span> <span class="nav-text">3.Dijkstra</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A0%91"><span class="nav-number">3.</span> <span class="nav-text">生成树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91"><span class="nav-number">3.1.</span> <span class="nav-text">1.最小生成树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%AC%A1%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-k%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-%E4%B8%A5%E6%A0%BC%E6%AC%A1%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91"><span class="nav-number">3.2.</span> <span class="nav-text">2.次小生成树\k小生成树\严格次小生成树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#P4180-%E3%80%90%E6%A8%A1%E6%9D%BF%E3%80%91%E4%B8%A5%E6%A0%BC%E6%AC%A1%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-BJWC2010"><span class="nav-number">3.3.</span> <span class="nav-text">P4180 【模板】严格次小生成树[BJWC2010]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%96%AF%E5%9D%A6%E7%BA%B3%E6%A0%91"><span class="nav-number">3.4.</span> <span class="nav-text">3.斯坦纳树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A0%91%E5%BD%A2%E5%9B%BE"><span class="nav-number">4.</span> <span class="nav-text">生成树形图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%A0%91%E5%92%8C%E7%94%9F%E6%88%90%E6%A0%91%E5%BD%A2%E5%9B%BE%E8%AE%A1%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">生成树和生成树形图计数</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="周道"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">周道</p>
+  <div class="site-description" itemprop="description">⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AlthenWaySatan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:guangyuanzhouzheyu@outlook.com" title="E-Mail → mailto:guangyuanzhouzheyu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/althenwaysatan" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;althenwaysatan" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/AlthenWaySatan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5862576360" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5862576360" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=2469265056&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;2469265056&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://ferric.top/" title="http:&#x2F;&#x2F;ferric.top&#x2F;" rel="noopener" target="_blank">FerricIon</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <a href="/">
+    <div class="back-to-home" role="button">
+      <i class="fa fa-home"></i>
+    </div>
+  </a>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://althenwaysatan.github.io/2018/12/29/%E6%9C%80%E7%9F%AD%E8%B7%AF-%E7%94%9F%E6%88%90%E6%A0%91%E5%92%8C%E7%94%9F%E6%88%90%E6%A0%91%E5%BD%A2%E5%9B%BE%E7%9B%B8%E5%85%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="周道">
+      <meta itemprop="description" content="⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Althen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          最短路，生成树和生成树形图相关
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-29 14:12:34" itemprop="dateCreated datePublished" datetime="2018-12-29T14:12:34+08:00">2018-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-13 20:37:06" itemprop="dateModified" datetime="2022-02-13T20:37:06+08:00">2022-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>$\ \ \ \ \ \ \ \,$图论基础复习笔记：</p>
+<span id="more"></span>
+<h2 id="存图相关"><a href="#存图相关" class="headerlink" title="存图相关"></a>存图相关</h2><h3 id="1-邻接表："><a href="#1-邻接表：" class="headerlink" title="1.邻接表："></a>1.邻接表：</h3><p>$\ \ \ \ \ \ \ \,$在点数特别小的时候，我们可以用邻接表（二维数组）来表示点之间的链接关系。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> e[N][N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> w)</span></span>&#123;e[a][b]=w;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-链表："><a href="#2-链表：" class="headerlink" title="2. 链表："></a>2. 链表：</h3><p>$\ \ \ \ \ \ \ \,$在点数比较大的时候，我们可以用链式向前星来表示点之间的链接关系。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> head[N],p;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Edge</span>&#123;<span class="type">int</span> v,w,last;&#125;E[N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> w)</span></span></span><br><span class="line"><span class="function"></span>&#123;E[++p]=(Edge)&#123;b,w,head[a]&#125;;head[a]=p;&#125;</span><br></pre></td></tr></table></figure>
+<p>$\ \ \ \ \ \ \ \,$遍历方式如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=head[u];i;i=G[i].last)G[i].v,G[i].w;</span><br><span class="line"><span class="comment">//G[i].v就是u的直接连接点，G[i].w是边上信息</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-动态数组"><a href="#3-动态数组" class="headerlink" title="3.动态数组"></a>3.动态数组</h3><p>$\ \ \ \ \ \ \ \,$在点数比较大的时候，我们可以用$\tt vector$，会比链表慢一点，但是比较方便，下面默认都是这种存图方法。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Edge</span>&#123;<span class="type">int</span> p,w;&#125;E[N];</span><br><span class="line">vector&lt;Edge&gt; e[N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> w)</span></span></span><br><span class="line"><span class="function"></span>&#123;e[a].<span class="built_in">push_back</span>((Edge)&#123;b,w&#125;);&#125;</span><br></pre></td></tr></table></figure>
+<p>$\ \ \ \ \ \ \,$遍历方式如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> v:E[u])v.p,v.w;</span><br><span class="line"><span class="comment">//v.p就是u的直接连接点，v.w是边上信息</span></span><br></pre></td></tr></table></figure>
+<h2 id="最短路"><a href="#最短路" class="headerlink" title="最短路"></a>最短路</h2><p>$\ \ \ \ \ \ \ \,$最短路的核心思想都差不多，用松弛操作来求解，所以只讲算法特点和用法，不讲原理：</p>
+<h3 id="1-Floyd"><a href="#1-Floyd" class="headerlink" title="1.Floyd"></a>1.Floyd</h3><p>$\ \ \ \ \ \ \ \,$Floyd可以在$O(n^3)$的时间内，求出任意点对两两之间的距离，支持负边权：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> dis[N][N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">floyd</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(dis,<span class="number">63</span>,<span class="built_in">sizeof</span>(dis));</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		dis[i][i]=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">auto</span> v:E[i])dis[i][v.p]=v.w;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">1</span>;k&lt;=n;k++)</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;j++)</span><br><span class="line">	<span class="keyword">if</span>(dist[i][j]&gt;dist[i][k]+dist[k][j])</span><br><span class="line">	dist[i][j]=dist[i][k]+dist[k][j];</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h3 id="2-SPFA"><a href="#2-SPFA" class="headerlink" title="2.SPFA"></a>2.SPFA</h3><p>$\ \ \ \ \ \ \ \,$SPFA可以在下到$n$上到$(n^2)$的时间内，求出单源对于每个点最短路，支持负边权，但是因为复杂度不平衡，关于SPFA,他死了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> dis[N];</span><br><span class="line"><span class="type">bool</span> used[N];</span><br><span class="line">queue&lt;<span class="type">int</span>&gt; Q;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">SPFA</span><span class="params">(<span class="type">int</span> S)</span></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(dis,<span class="number">63</span>,<span class="built_in">sizeof</span>(dis));</span><br><span class="line">  Q.<span class="built_in">push</span>(S);used[S]=<span class="number">1</span>;dis[S]=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(!Q.<span class="built_in">empty</span>())&#123;</span><br><span class="line">    <span class="type">int</span> u=Q.<span class="built_in">front</span>();Q.<span class="built_in">pop</span>();used[u]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> v:E[u])</span><br><span class="line">    <span class="keyword">if</span>(dis[v.p]&gt;dis[u]+v.w)&#123;</span><br><span class="line">      dis[v.p]=dis[u]+v.w;</span><br><span class="line">      <span class="keyword">if</span>(used[v.p]==<span class="number">0</span>)</span><br><span class="line">			&#123;used[v.p]=<span class="number">1</span>;Q.<span class="built_in">push</span>(v.p);&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>$\ \ \ \ \ \ \ \,$或者SPFA加上堆优化后，复杂度会比较好，长得也和Dijkstra很相像了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;<span class="type">int</span> v,dis;&#125;;</span><br><span class="line"><span class="keyword">inline</span> <span class="type">bool</span> <span class="keyword">operator</span> &lt;(<span class="type">const</span> node &amp;a,<span class="type">const</span> node &amp;b)</span><br><span class="line">&#123;<span class="keyword">return</span> a.dis&gt;b.dis;&#125;</span><br><span class="line"><span class="type">int</span> dis[N];</span><br><span class="line">priority_queue&lt;node&gt; Q;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">heap_SPFA</span><span class="params">(<span class="type">int</span> S)</span></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(dis,<span class="number">63</span>,<span class="built_in">sizeof</span>(dis));</span><br><span class="line">  Q.<span class="built_in">push</span>((node)&#123;<span class="number">1</span>,<span class="number">0</span>&#125;);</span><br><span class="line">	dis[S]=<span class="number">0</span>;used[S]=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">while</span>(!Q.<span class="built_in">empty</span>())&#123;</span><br><span class="line">    <span class="type">int</span> u=Q.<span class="built_in">top</span>().v;Q.<span class="built_in">pop</span>();used[u]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">auto</span> v:E[u])</span><br><span class="line">    <span class="keyword">if</span>(dis[v.p]&gt;dis[u]+v.w)&#123;</span><br><span class="line">      dis[v.p]=dis[u]+v.w;</span><br><span class="line">      <span class="keyword">if</span>(used[v.p]==<span class="number">0</span>)</span><br><span class="line">			&#123;used[v.p]=<span class="number">1</span>;Q.<span class="built_in">push</span>((node)&#123;dis[v.p],v.p&#125;)&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-Dijkstra"><a href="#3-Dijkstra" class="headerlink" title="3.Dijkstra"></a>3.Dijkstra</h3><p>$\ \ \ \ \ \ \ \,$Dijkstra可以在$O(n\log n)$的时间内，求出单源对于每个点最短路，但是不支持负边权：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span>&#123;<span class="type">int</span> v,dis;&#125;;</span><br><span class="line"><span class="keyword">inline</span> <span class="type">bool</span> <span class="keyword">operator</span> &lt;(<span class="type">const</span> node &amp;a,<span class="type">const</span> node &amp;b)</span><br><span class="line">&#123;<span class="keyword">return</span> a.dis&gt;b.dis;&#125;</span><br><span class="line"><span class="type">int</span> dis[N];</span><br><span class="line">priority_queue&lt;node&gt; Q;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Dijkstra</span><span class="params">(<span class="type">int</span> S)</span></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(dis,<span class="number">63</span>,<span class="built_in">sizeof</span>(dis));</span><br><span class="line">  	Q.<span class="built_in">push</span>((node)&#123;<span class="number">1</span>,<span class="number">0</span>&#125;);dis[S]=<span class="number">0</span>;</span><br><span class="line">  	<span class="keyword">while</span>(!Q.<span class="built_in">empty</span>())&#123;</span><br><span class="line">    	<span class="type">int</span> u=Q.<span class="built_in">top</span>().v;Q.<span class="built_in">pop</span>();</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">auto</span> v:E[u])</span><br><span class="line">    	<span class="keyword">if</span>(dis[v.p]&gt;dis[u]+v.w)&#123;</span><br><span class="line">      		dis[v.p]=dis[u]+v.w;</span><br><span class="line">			Q.<span class="built_in">push</span>((node)&#123;dis[v.p],v.p&#125;);</span><br><span class="line">    	&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="生成树"><a href="#生成树" class="headerlink" title="生成树"></a>生成树</h2><p>$\ \ \ \ \ \ \ \,$生成树是针对无向图的说法，基本上是基于贪心的操作。</p>
+<h3 id="1-最小生成树"><a href="#1-最小生成树" class="headerlink" title="1.最小生成树"></a>1.最小生成树</h3><p>$\ \ \ \ \ \ \ \,$最小生成树最常见的贪心做法是Kruskal，因为一棵树$n-1$条边，我们可以把所有边排序过后，贪心选取能构成树的最小的$n-1$条边，用并查集维护其连通性：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> top,fa[N];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Link</span>&#123;<span class="type">int</span> u,v,w;&#125;e[N];</span><br><span class="line"><span class="keyword">inline</span> <span class="type">bool</span> <span class="keyword">operator</span> &lt;(<span class="type">const</span> Link &amp;a,<span class="type">const</span> Link &amp;b)&#123;<span class="keyword">return</span> a.w&lt;b.w;&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> a)</span></span>&#123;<span class="keyword">return</span> a==fa[a]?a:fa[a]=<span class="built_in">find</span>(fa[a]);&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add_edge</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> w)</span></span>&#123;e[++top]=(Link)&#123;a,b,w&#125;;&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Kruskal</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">sort</span>(e+<span class="number">1</span>,e+top+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)fa[i]=i;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,A,B;i&lt;=m;i++)</span><br><span class="line">  <span class="keyword">if</span>((A=<span class="built_in">find</span>(e[i].u))!=(B=<span class="built_in">find</span>(e[i].v)))&#123;</span><br><span class="line">		<span class="built_in">add</span>(e[i].u,e[i].v,e[i].w);</span><br><span class="line">		<span class="built_in">add</span>(e[i].v,e[i].u,e[i].w);</span><br><span class="line">		fa[A]=B;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-次小生成树-k小生成树-严格次小生成树"><a href="#2-次小生成树-k小生成树-严格次小生成树" class="headerlink" title="2.次小生成树\k小生成树\严格次小生成树"></a>2.次小生成树\k小生成树\严格次小生成树</h3><p>$\ \ \ \ \ \ \ \,$次小生成树，我们就是做如下操作：</p>
+<ol>
+<li><p>做一次最小生成树；</p>
+</li>
+<li><p>在没有加入树边的边中选一个最小的，假设为u与v之间的边；</p>
+</li>
+<li><p>在最小生成树上面$u$到$v$的路径上，删除一条最长的边；</p>
+</li>
+<li><p>然后把2步中选择的边加入树边。</p>
+</li>
+</ol>
+<p>$\ \ \ \ \ \ \ \,$复杂度是$O(m\log m+n\log n)$，操作比较繁琐，虽然有些时候不需要真实建树，但是还是很繁琐，就不单独贴模板了。</p>
+<p>$\ \ \ \ \ \ \ \,$对于k小生成树，我们做k次就好了啊，复杂度$O(m\log m+kn\log n)$。</p>
+<p>$\ \ \ \ \ \ \ \,$对于严格次小生成树，我们做最多$m$次，检查直到严格大于最小生成树就停止，复杂度$O(m\log m+mn\log n)$。</p>
+<h3 id="P4180-【模板】严格次小生成树-BJWC2010"><a href="#P4180-【模板】严格次小生成树-BJWC2010" class="headerlink" title="P4180 【模板】严格次小生成树[BJWC2010]"></a><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P4180">P4180 【模板】严格次小生成树[BJWC2010]</a></h3><p>$\ \ \ \ \ \ \ \,$代码很长，引起不适：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">long</span> <span class="type">long</span> inf=<span class="number">2147483647000000</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eps=<span class="number">1e-10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi=<span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="comment">//char buf[1&lt;&lt;15],*S=buf,*T=buf;</span></span><br><span class="line"><span class="comment">//char getch()&#123;return S==T&amp;&amp;(T=(S=buf)+fread(buf,1,1&lt;&lt;15,stdin),S==T)?0:*S++;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="type">char</span> ch;ch=<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">while</span>(ch&lt;<span class="string">&#x27;0&#x27;</span>||ch&gt;<span class="string">&#x27;9&#x27;</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>) f=<span class="number">0</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">	<span class="keyword">while</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch&amp;<span class="number">15</span>);ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">	<span class="keyword">if</span>(f)<span class="keyword">return</span> x;<span class="keyword">else</span> <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">900010</span>;</span><br><span class="line"><span class="type">int</span> n,m;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> Cnt;</span><br><span class="line"><span class="type">bool</span> used[N];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Edge</span>&#123;<span class="type">int</span> p,w;&#125;E[N];</span><br><span class="line">vector&lt;Edge&gt; G[N&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> w)</span></span></span><br><span class="line"><span class="function"></span>&#123;G[a].<span class="built_in">push_back</span>((Edge)&#123;b,w&#125;);&#125;</span><br><span class="line"><span class="type">int</span> top,Fa[N];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Link</span>&#123;<span class="type">int</span> u,v,w;&#125;e[N];</span><br><span class="line"><span class="keyword">inline</span> <span class="type">bool</span> <span class="keyword">operator</span> &lt;(<span class="type">const</span> Link &amp;a,<span class="type">const</span> Link &amp;b)&#123;<span class="keyword">return</span> a.w&lt;b.w;&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> a)</span></span>&#123;<span class="keyword">return</span> a==Fa[a]?a:Fa[a]=<span class="built_in">find</span>(Fa[a]);&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add_edge</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> w)</span></span>&#123;e[++top]=(Link)&#123;a,b,w&#125;;&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Kruskal</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">sort</span>(e+<span class="number">1</span>,e+top+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)Fa[i]=i;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,A,B;i&lt;=m;i++)</span><br><span class="line">  <span class="keyword">if</span>((A=<span class="built_in">find</span>(e[i].u))!=(B=<span class="built_in">find</span>(e[i].v)))&#123;</span><br><span class="line">		<span class="built_in">add</span>(e[i].u,e[i].v,e[i].w);</span><br><span class="line">		<span class="built_in">add</span>(e[i].v,e[i].u,e[i].w);</span><br><span class="line">		Cnt+=<span class="number">1ll</span>*e[i].w;</span><br><span class="line">		used[i]=<span class="number">1</span>;</span><br><span class="line">		Fa[A]=B;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> fa[N][<span class="number">19</span>],deep[N];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> Max[N][<span class="number">19</span>],Min[N][<span class="number">19</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> f)</span></span>&#123;</span><br><span class="line">  fa[u][<span class="number">0</span>]=f;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">auto</span> v:G[u])&#123;</span><br><span class="line">    <span class="keyword">if</span>(v.p==f)<span class="keyword">continue</span>;</span><br><span class="line">    deep[v.p]=deep[u]+<span class="number">1</span>;</span><br><span class="line">    Max[v.p][<span class="number">0</span>]=v.w;</span><br><span class="line">    Min[v.p][<span class="number">0</span>]=-inf;</span><br><span class="line">    <span class="built_in">dfs</span>(v.p,u);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">cal</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">18</span>;++i)</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n;++j)&#123;</span><br><span class="line">    fa[j][i]=fa[fa[j][i<span class="number">-1</span>]][i<span class="number">-1</span>];</span><br><span class="line">    Max[j][i]=<span class="built_in">max</span>(Max[j][i<span class="number">-1</span>],Max[fa[j][i<span class="number">-1</span>]][i<span class="number">-1</span>]);</span><br><span class="line">    Min[j][i]=<span class="built_in">max</span>(Min[j][i<span class="number">-1</span>],Min[fa[j][i<span class="number">-1</span>]][i<span class="number">-1</span>]);</span><br><span class="line">    <span class="keyword">if</span>(Max[j][i<span class="number">-1</span>]&gt;Max[fa[j][i<span class="number">-1</span>]][i<span class="number">-1</span>])</span><br><span class="line">		Min[j][i]=<span class="built_in">max</span>(Min[j][i],Max[fa[j][i<span class="number">-1</span>]][i<span class="number">-1</span>]);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(Max[j][i<span class="number">-1</span>]&lt;Max[fa[j][i<span class="number">-1</span>]][i<span class="number">-1</span>])</span><br><span class="line">		Min[j][i]=<span class="built_in">max</span>(Min[j][i],Max[j][i<span class="number">-1</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">LCA</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(deep[x]&lt;deep[y])<span class="built_in">swap</span>(x,y);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">18</span>;i&gt;=<span class="number">0</span>;--i)</span><br><span class="line">  <span class="keyword">if</span>(deep[fa[x][i]]&gt;=deep[y])x=fa[x][i];</span><br><span class="line">  <span class="keyword">if</span>(x==y)<span class="keyword">return</span> x;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">18</span>;i&gt;=<span class="number">0</span>;--i)</span><br><span class="line">  <span class="keyword">if</span>(fa[x][i]!=fa[y][i])x=fa[x][i],y=fa[y][i];</span><br><span class="line">  <span class="keyword">return</span> fa[x][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">qmax</span><span class="params">(<span class="type">int</span> u,<span class="type">int</span> v,<span class="type">long</span> <span class="type">long</span> maxx)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> Ans=-inf;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">18</span>;i&gt;=<span class="number">0</span>;--i)</span><br><span class="line">  <span class="keyword">if</span>(deep[fa[u][i]]&gt;=deep[v])&#123;</span><br><span class="line">    <span class="keyword">if</span>(maxx!=Max[u][i])Ans=<span class="built_in">max</span>(Ans,Max[u][i]);</span><br><span class="line">    <span class="keyword">else</span> Ans=<span class="built_in">max</span>(Ans,Min[u][i]);</span><br><span class="line">    u=fa[u][i];</span><br><span class="line">	&#125;</span><br><span class="line">  <span class="keyword">return</span> Ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=<span class="built_in">read</span>(),m=<span class="built_in">read</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,a,b,c;i&lt;=m;i++)</span><br><span class="line">	a=<span class="built_in">read</span>(),b=<span class="built_in">read</span>(),c=<span class="built_in">read</span>(),</span><br><span class="line">	<span class="built_in">add_edge</span>(a,b,c);</span><br><span class="line">	<span class="built_in">Kruskal</span>();</span><br><span class="line">	<span class="type">long</span> <span class="type">long</span> Ans=inf;</span><br><span class="line">  Min[<span class="number">1</span>][<span class="number">0</span>]=-inf;</span><br><span class="line">  deep[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">dfs</span>(<span class="number">1</span>,<span class="number">-1</span>);<span class="built_in">cal</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;++i)<span class="keyword">if</span>(!used[i])&#123;</span><br><span class="line">    <span class="type">int</span> u=e[i].u,v=e[i].v,lca=<span class="built_in">LCA</span>(u,v);</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> d=e[i].w;</span><br><span class="line">    Ans=<span class="built_in">min</span>(Ans,Cnt-<span class="built_in">max</span>(<span class="built_in">qmax</span>(u,lca,d),<span class="built_in">qmax</span>(v,lca,d))+d);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>,Ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="3-斯坦纳树"><a href="#3-斯坦纳树" class="headerlink" title="3.斯坦纳树"></a>3.斯坦纳树</h3><p>$\ \ \ \ \ \ \ \,$当只要求图的一部分点连接的时候，求最小的生成树，就是斯坦纳树，做法比较繁琐，大数据也不能优秀地处理。具体看这里<a target="_blank" rel="noopener" href="https://blog.csdn.net/VictoryCzt/article/details/82972857">【斯坦纳树学习笔记(VictoryCzt Orz)】</a>。</p>
+<h2 id="生成树形图"><a href="#生成树形图" class="headerlink" title="生成树形图"></a>生成树形图</h2><p>$\ \ \ \ \ \ \ \,$树形图不是一个有很好求法的东西，朱刘算法可以做到复杂度$O(nm)$求出最小树形图，过程大概如下：</p>
+<ol>
+<li><p>找到除了$root$以为其他点的权值最小的入边，如果出现除了$root$以外存在其他孤立的点，则不存在最小树形图。</p>
+</li>
+<li><p>找到图中所有的环，并对环进行缩点，重新编号，更新其他点到环上的点的距离。</p>
+</li>
+<li><p>以环数为下一次查找的点数，继续执行上述操作，直到没有环或者判定出不存在最小树形图为止。</p>
+</li>
+</ol>
+<p>$\ \ \ \ \ \ \ \,$大概就是这个图的意思：</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/b5fbfbb3e6872794a624ca4947d868ae.png" alt=""></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> n,root;  </span><br><span class="line"><span class="type">int</span> k[N],idx[N],x,tim;</span><br><span class="line"><span class="type">int</span> cost[N],fa[N],f[N];</span><br><span class="line"><span class="type">int</span> mincost[N],ans,top;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Link</span>&#123;<span class="type">int</span> u,v,w;&#125;e[N];</span><br><span class="line"><span class="keyword">inline</span> <span class="type">bool</span> <span class="keyword">operator</span> &lt;(<span class="type">const</span> Link &amp;a,<span class="type">const</span> Link &amp;b)&#123;<span class="keyword">return</span> a.w&lt;b.w;&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add_edge</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> w)</span></span>&#123;e[++top]=(Link)&#123;a,b,w&#125;;&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">Zhu_Liu</span><span class="params">(<span class="type">int</span> root)</span></span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="built_in">memset</span>(mincost,<span class="number">63</span>,<span class="built_in">sizeof</span>(mincost));</span><br><span class="line">    <span class="built_in">memset</span>(idx,<span class="number">-1</span>,<span class="built_in">sizeof</span>(idx));</span><br><span class="line">    <span class="built_in">memset</span>(f,<span class="number">0</span>,<span class="built_in">sizeof</span>(f));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;i++)</span><br><span class="line">    <span class="keyword">if</span>(e[i].w&lt;mincost[e[i].v]&amp;&amp;e[i].u!=e[i].v)</span><br><span class="line">		&#123;mincost[e[i].v]=e[i].w;fa[e[i].v]=e[i].u;&#125;</span><br><span class="line">    mincost[root]=<span class="number">0</span>;tim=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">    	<span class="keyword">if</span>(mincost[i]==mincost[<span class="number">0</span>])<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">      ans+=mincost[i];x=i;</span><br><span class="line">      <span class="keyword">while</span>(f[x]!=i&amp;&amp;x!=root)f[x]=i,x=fa[x];</span><br><span class="line">      <span class="keyword">if</span>(x!=root&amp;&amp;idx[x]==<span class="number">-1</span>)&#123;</span><br><span class="line">        tim++;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=fa[x];j!=x;j=fa[j])idx[j]=tim;</span><br><span class="line">        idx[x]=tim;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(tim==<span class="number">0</span>)<span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)</span><br><span class="line">    <span class="keyword">if</span>(idx[i]==<span class="number">-1</span>)idx[i]=++tim;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;</span><br><span class="line">      x=e[i].v;e[i].u=idx[e[i].u];e[i].v=idx[e[i].v];</span><br><span class="line">      <span class="keyword">if</span>(e[i].u!=e[i].v)e[i].w-=mincost[x];</span><br><span class="line">    &#125;</span><br><span class="line">    n=tim;root=idx[root];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="生成树和生成树形图计数"><a href="#生成树和生成树形图计数" class="headerlink" title="生成树和生成树形图计数"></a>生成树和生成树形图计数</h2><p>$\ \ \ \ \ \ \ \,$计数的话，需要用到矩阵树定理：</p>
+<p>$\ \ \ \ \ \ \ \,$<strong>图基尔霍夫矩阵的行列式值就是图的生成树个数</strong></p>
+<p>$\ \ \ \ \ \ \ \,$对于生成树形图同样适用，把双向边和入度改为单向即可，通过线性代数技巧优化求行列式的复杂度，可以做到$O(n^3+nm)$。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> A[N][N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">	A[a][a]++;A[b][b]++;</span><br><span class="line">	A[a][b]--;A[b][a]--;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">Gauss</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> ans=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=i+<span class="number">1</span>;j&lt;n;j++)</span><br><span class="line">		<span class="keyword">while</span>(A[j][i])&#123;</span><br><span class="line">			<span class="type">int</span> t=A[i][i]/A[j][i];</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> k=i;k&lt;n;k++)</span><br><span class="line">			A[i][k]-=t*A[j][k];</span><br><span class="line">			<span class="built_in">swap</span>(A[j],A[i]);</span><br><span class="line">			ans=-ans;</span><br><span class="line">		&#125;</span><br><span class="line">		ans*=A[i][i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ans</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OI/" rel="tag"># OI</a>
+              <a href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag"># 图论</a>
+              <a href="/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/" rel="tag"># 最短路</a>
+              <a href="/tags/%E7%94%9F%E6%88%90%E6%A0%91%E5%BD%A2%E5%9B%BE/" rel="tag"># 生成树形图</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/29/OI%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%9F%A9%E9%98%B5%E9%97%AE%E9%A2%98/" rel="next" title="OI中常见的线性代数矩阵问题">
+                  OI中常见的线性代数矩阵问题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">周道</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

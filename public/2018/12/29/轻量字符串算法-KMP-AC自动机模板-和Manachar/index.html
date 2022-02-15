@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"althenwaysatan.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="$\ \ \ \ \ \ \ \,$一些简单字符串相关算法的复习笔记：">
+<meta property="og:type" content="website">
+<meta property="og:title" content="轻量字符串算法——KMP（AC自动机模板）和Manachar">
+<meta property="og:url" content="https://althenwaysatan.github.io/2018/12/29/%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95-KMP-AC%E8%87%AA%E5%8A%A8%E6%9C%BA%E6%A8%A1%E6%9D%BF-%E5%92%8CManachar/index.html">
+<meta property="og:site_name" content="Althen&#39;s Blog">
+<meta property="og:description" content="$\ \ \ \ \ \ \ \,$一些简单字符串相关算法的复习笔记：">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-12-29T06:28:15.000Z">
+<meta property="article:modified_time" content="2022-02-13T13:46:00.319Z">
+<meta property="article:author" content="周道">
+<meta property="article:tag" content="OI">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="字符串">
+<meta property="article:tag" content="KMP">
+<meta property="article:tag" content="AC自动机">
+<meta property="article:tag" content="Manachar">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://althenwaysatan.github.io/2018/12/29/%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95-KMP-AC%E8%87%AA%E5%8A%A8%E6%9C%BA%E6%A8%A1%E6%9D%BF-%E5%92%8CManachar/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://althenwaysatan.github.io/2018/12/29/%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95-KMP-AC%E8%87%AA%E5%8A%A8%E6%9C%BA%E6%A8%A1%E6%9D%BF-%E5%92%8CManachar/","path":"2018/12/29/轻量字符串算法-KMP-AC自动机模板-和Manachar/","title":"轻量字符串算法——KMP（AC自动机模板）和Manachar"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>轻量字符串算法——KMP（AC自动机模板）和Manachar | Althen's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Althen's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">周道的个人博客，记录学习历程，目前正在逐步完善中</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/contentimg/beatheart.html" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#KMP"><span class="nav-number">1.</span> <span class="nav-text">KMP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#P3193-HNOI2008-GT%E8%80%83%E8%AF%95"><span class="nav-number">1.1.</span> <span class="nav-text">P3193 [HNOI2008]GT考试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Manachar"><span class="nav-number">2.</span> <span class="nav-text">Manachar</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#P4555-%E5%9B%BD%E5%AE%B6%E9%9B%86%E8%AE%AD%E9%98%9F-%E6%9C%80%E9%95%BF%E5%8F%8C%E5%9B%9E%E6%96%87%E4%B8%B2"><span class="nav-number">2.1.</span> <span class="nav-text">P4555 [国家集训队]最长双回文串</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="周道"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">周道</p>
+  <div class="site-description" itemprop="description">⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AlthenWaySatan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:guangyuanzhouzheyu@outlook.com" title="E-Mail → mailto:guangyuanzhouzheyu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/althenwaysatan" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;althenwaysatan" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/AlthenWaySatan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5862576360" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5862576360" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=2469265056&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;2469265056&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://ferric.top/" title="http:&#x2F;&#x2F;ferric.top&#x2F;" rel="noopener" target="_blank">FerricIon</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <a href="/">
+    <div class="back-to-home" role="button">
+      <i class="fa fa-home"></i>
+    </div>
+  </a>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://althenwaysatan.github.io/2018/12/29/%E8%BD%BB%E9%87%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95-KMP-AC%E8%87%AA%E5%8A%A8%E6%9C%BA%E6%A8%A1%E6%9D%BF-%E5%92%8CManachar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="周道">
+      <meta itemprop="description" content="⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Althen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          轻量字符串算法——KMP（AC自动机模板）和Manachar
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-29 14:28:15" itemprop="dateCreated datePublished" datetime="2018-12-29T14:28:15+08:00">2018-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-13 21:46:00" itemprop="dateModified" datetime="2022-02-13T21:46:00+08:00">2022-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>$\ \ \ \ \ \ \ \,$一些简单字符串相关算法的复习笔记：</p>
+<span id="more"></span>
+<h2 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h2><p>$\ \ \ \ \ \ \,$kmp是用来处理字符串匹配的常见简单算法，网上可以找到很多讲解，这里就不细讲了，一笔带过。</p>
+<p>$\ \ \ \ \ \ \,$我们知道，暴力匹配两个字符串的复杂度是$O(n^2)$的，很多时候我们都不能接受这个复杂度，考虑如何减小复杂度，我们发现在暴力匹配的过程中，会重复匹配很多地方，所以我们从这里下手，进行优化。</p>
+<p>$\ \ \ \ \ \ \,$引入kmp算法最核心的东西—— $ next$ 数组：</p>
+<p>$\ \ \ \ \ \ \,$代表当前字符之前的字符串中，有多大长度的相同前缀。例如如果 $next [j] = k$，代表位置 $j$ 之前的字符串中有最大长度为 $k $ 的相同前缀。</p>
+<p>$\ \ \ \ \ \ \,$意味着在某个字符失配时，告诉你下一步匹配中，模式串应该跳到哪个位置（$next [j]$ ）。如果 $next [j]$ 等于$-1$，则跳到模式串的开头字符，若 $next [j] = k$ 且 $k &gt; 0$，代表下次匹配跳到 $j$ 之前的某个字符，而不是跳到开头，跳过了 $k$ 个曾经匹配过的字符。</p>
+<p>$\ \ \ \ \ \ \,$为什么这 $k$ 个字符就这样逃过了？我们可以这样感性地理解：</p>
+<p>$\ \ \ \ \ \ \,$若是在 $j$ 这个位置失配，那么说明在这个位置之前，模式串和文本串是可以匹配的，也就是一样的，那么我们要是可以预处理下次跳到的地方就好了，这个就是我们预处理的结果：$ next$ 数组。</p>
+<p>$\ \ \ \ \ \ \,$这样我们的匹配复杂度就降为$O(n)$：</p>
+<p>$\ \ \ \ \ \ \,$假设现在文本串$S$匹配到 $i$ 位置，模式串$P$匹配到 $j$ 位置</p>
+<ul>
+<li><p>如果$j = -1$，或者当前字符匹配成功（即$S[i] = P[j]$），$i$，$j$都加一，继续匹配下一个字符；</p>
+</li>
+<li><p>如果$j \neq -1$，且当前字符匹配失败（即$S[i] \neq P[j]$），则令 $i$ 不变，$j = next[j]$。此举意味着失配时，模式串P相对于文本串S向右移动了$j - next [j]$ 位。</p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(i&lt;slen&amp;&amp;j&lt;plen)&#123;</span><br><span class="line">  <span class="keyword">if</span>(j==<span class="number">-1</span>||s[i]==p[j])i++,j++;</span><br><span class="line">  <span class="keyword">else</span> j=Next[j];</span><br><span class="line">  <span class="keyword">if</span>(j==plen)j=Next[j];<span class="comment">//到这里就匹配到了一个模式串了。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>$\ \ \ \ \ \ \,$那么我们如何快速地求出$ next$ 数组？</p>
+<p>$\ \ \ \ \ \ \,$这个过程相当于自己与自己匹配，假设现在对于字符串$p$，已经处理到了 $k$ 位置，和自己匹配到了 $j$ 位置（显然$k&gt;j$）：</p>
+<ul>
+<li><p>如果$j&gt;0$，并且$p[k]\neq p[j]$，那么就是和自己失配了，$j = next[j]$；</p>
+</li>
+<li><p>如果$p[k]= p[j]$，那么就是是适配了，$k$，$j$都加一，同时如果下次匹配的时候在 $k+1$ 处失配了，那么我们就跳过枚举前面 $k$ 个元素，直接匹配 $j+1$，所以 $next[k+1]=j+1$。</p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> j=<span class="number">0</span>;next[<span class="number">0</span>]=<span class="number">-1</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">1</span>;k&lt;n;k++)&#123;</span><br><span class="line">  <span class="keyword">while</span>(j&gt;<span class="number">0</span>&amp;&amp;(p[k]!=p[j])) j=next[j];</span><br><span class="line">  j+=(p[k]==p[j]);next[k+<span class="number">1</span>]=j;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>$\ \ \ \ \ \ \,$复杂度$O(n)$。</p>
+<p>$\ \ \ \ \ \ \,$单字符串匹配的话，就是模板题不说了，kmp最重要的，还是对$ next$ 数组的运用。<del>（多字符串匹配我还是信仰Sam，XD）</del>，还是贴一个AC自动机的模板XD：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">AC_Automata</span>&#123;</span><br><span class="line">	<span class="type">int</span> son[<span class="number">26</span>][N],fail[N],appear[N];</span><br><span class="line">	<span class="type">int</span> size;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Get_trie</span><span class="params">(<span class="type">char</span> s[],<span class="type">int</span> id)</span></span>&#123;</span><br><span class="line">		<span class="type">int</span> len=<span class="built_in">strlen</span>(s),now=<span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(!son[s[i]-<span class="string">&#x27;a&#x27;</span>][now])son[s[i]-<span class="string">&#x27;a&#x27;</span>][now]=++size;</span><br><span class="line">			now=son[s[i]-<span class="string">&#x27;a&#x27;</span>][now]; </span><br><span class="line">		&#125;</span><br><span class="line">		appear[now]=id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Get_fail</span><span class="params">()</span></span>&#123;</span><br><span class="line">		queue&lt;<span class="type">int</span>&gt; Q;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)<span class="keyword">if</span>(son[i][<span class="number">0</span>]!=<span class="number">0</span>)</span><br><span class="line">		fail[son[i][<span class="number">0</span>]]=<span class="number">0</span>,Q.<span class="built_in">push</span>(son[i][<span class="number">0</span>]);</span><br><span class="line">		<span class="keyword">while</span>(!Q.<span class="built_in">empty</span>())&#123;</span><br><span class="line">			<span class="type">int</span> u=Q.<span class="built_in">front</span>();Q.<span class="built_in">pop</span>();</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">26</span>;i++)</span><br><span class="line">			<span class="keyword">if</span>(son[i][u])fail[son[i][u]]=son[i][fail[u]],Q.<span class="built_in">push</span>(son[i][u]);</span><br><span class="line">			<span class="keyword">else</span> son[i][u]=son[i][fail[u]];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">char</span> s[])</span></span>&#123;</span><br><span class="line">		<span class="type">int</span> len=<span class="built_in">strlen</span>(s),now=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">      now=son[s[i]-<span class="string">&#x27;a&#x27;</span>][now];</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> t=now;t;t=fail[t])</span><br><span class="line">			<span class="comment">//something about appear[t];</span></span><br><span class="line">    &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="P3193-HNOI2008-GT考试"><a href="#P3193-HNOI2008-GT考试" class="headerlink" title="P3193 [HNOI2008]GT考试"></a><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P3193">P3193 [HNOI2008]GT考试</a></h3><p>$\ \ \ \ \ \ \,$很明显的，我们会得到一个DP方程式：</p>
+<p>$\ \ \ \ \ \ \,$我们令$f(i,j)$表示我们$X$已经处理到了$i$，其中出现了长度为$j$的连续不吉利数字。</p>
+<p>$\ \ \ \ \ \ \,$答案显然就是$\sum_{i=0}^{m-1}f(n,i)$，现在考虑如何转移。</p>
+<p>$\ \ \ \ \ \ \,$令$g(i,j)$表示，在长度为$j$的连续不吉利数字后，跟上数字$j$后，不吉利数字的长度。</p>
+<p>$\ \ \ \ \ \ \,$那么就有：</p>
+<p>$f(i,j)=\sum_{b=0}^{9} f(i,a)[j=g(a,b)]$</p>
+<p>$\ \ \ \ \ \ \,$其中$g(a,b)$就可以用kmp的$ next$ 数组找到：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">g</span><span class="params">(<span class="type">int</span> j,<span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(j!=<span class="number">-1</span>&amp;&amp;a[j]!=k)j=next[j];</span><br><span class="line">  <span class="keyword">return</span> j+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>$\ \ \ \ \ \ \,$我们可以花$O(10\cdot m^2)$的时间把$g$预处理出来，如何$O(nm)$来dp，但是$n$特别大，于是我们用矩阵来优化，完整代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> inf=<span class="number">0x7fffffff</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eps=<span class="number">1e-10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi=<span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="comment">//char buf[1&lt;&lt;15],*S=buf,*T=buf;</span></span><br><span class="line"><span class="comment">//char getch()&#123;return S==T&amp;&amp;(T=(S=buf)+fread(buf,1,1&lt;&lt;15,stdin),S==T)?0:*S++;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="type">char</span> ch;ch=<span class="built_in">getchar</span>();</span><br><span class="line">  <span class="keyword">while</span>(ch&lt;<span class="string">&#x27;0&#x27;</span>||ch&gt;<span class="string">&#x27;9&#x27;</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>) f=<span class="number">0</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">  <span class="keyword">while</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch&amp;<span class="number">15</span>);ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">  <span class="keyword">if</span>(f)<span class="keyword">return</span> x;<span class="keyword">else</span> <span class="keyword">return</span> -x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">30</span>;</span><br><span class="line"><span class="type">int</span> n,m,mod;</span><br><span class="line"><span class="type">char</span> s[N];</span><br><span class="line"><span class="type">int</span> a[N];</span><br><span class="line"><span class="type">int</span> f[N][N],ans;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Matrix</span>&#123;<span class="type">int</span> n,m;<span class="type">int</span> a[N][N];&#125;A,B;</span><br><span class="line"><span class="keyword">inline</span> Matrix <span class="keyword">operator</span> *(<span class="type">const</span> Matrix &amp;a,<span class="type">const</span> Matrix &amp;b)&#123;</span><br><span class="line">  Matrix ret;</span><br><span class="line">  ret.n=a.n;ret.m=b.m;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=a.n;i++)</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;=b.m;j++)&#123;</span><br><span class="line">    ret.a[i][j]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;=a.m;k++)</span><br><span class="line">    ret.a[i][j]=(ret.a[i][j]+a.a[i][k]*b.a[k][j]%mod)%mod;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> next[N];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">g</span><span class="params">(<span class="type">int</span> j,<span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(j!=<span class="number">-1</span>&amp;&amp;a[j+<span class="number">1</span>]!=k)j=next[j];</span><br><span class="line">  <span class="keyword">return</span> j+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  n=<span class="built_in">read</span>();m=<span class="built_in">read</span>();mod=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s+<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=m;i++)a[i]=s[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">  next[<span class="number">0</span>]=<span class="number">-1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">-1</span>,i=<span class="number">1</span>;i&lt;=m;next[i++]=++j)</span><br><span class="line">  <span class="keyword">while</span>(j!=<span class="number">-1</span>&amp;&amp;a[i]!=a[j+<span class="number">1</span>])j=next[j];</span><br><span class="line">  A.n=<span class="number">0</span>;A.m=m<span class="number">-1</span>;</span><br><span class="line">  B.m=B.n=m<span class="number">-1</span>;</span><br><span class="line">  A.a[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;i++)</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;=<span class="number">9</span>;j++)</span><br><span class="line">  B.a[i][<span class="built_in">g</span>(i,j)]++;</span><br><span class="line">  <span class="keyword">for</span>(;n;n&gt;&gt;=<span class="number">1</span>,B=B*B)<span class="keyword">if</span>(n&amp;<span class="number">1</span>)A=A*B;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;i++) ans=(ans+A.a[<span class="number">0</span>][i])%mod;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Manachar"><a href="#Manachar" class="headerlink" title="Manachar"></a>Manachar</h2><p>$\ \ \ \ \ \ \,$manachar算法特别单一，就是求回文串用的，题一般也特别裸，比较套路。</p>
+<p>$\ \ \ \ \ \ \,$首先，我们知道的，回文串分奇偶，但是如果我们在这个串中每一个字符之间都插入一个特殊字符，那么偶回文串就变成奇回文串了，这样我们就可以只处理奇回文串就行了。</p>
+<p>$\ \ \ \ \ \ \,$然后就是$RL$数组，表示以这个字符为中点，回文串的最大半径是多少，manachar算法就是$O(n)$求$RL$数组的算法。下面直接将做法，不讲原理了：</p>
+<p>$\ \ \ \ \ \ \,$记我们已经处理的回文串已经处理到的最右端为$MR$，他的对称轴为$pos$，现在要处理的位置为$i$，显然$pos&lt;i$。</p>
+<p>$\ \ \ \ \ \ \,$如果$MR&gt;i$，那么我们可以确定，已$i$为中点，回文串的最大半径至少是${\rm min}(RL[2\cdot pos-i],MR-i)$。</p>
+<p>$\ \ \ \ \ \ \,$剩下的就是暴力扩展，记得到时候更新一下$MR$和$pos$，模板如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> RL[N&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Manacher</span><span class="params">(<span class="type">char</span> *s,<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> MR=<span class="number">0</span>,pos=<span class="number">0</span>;</span><br><span class="line">  <span class="built_in">memset</span>(RL,<span class="number">0</span>,<span class="built_in">sizeof</span>(RL));</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">	<span class="keyword">if</span>(MR&gt;i)RL[i]=<span class="built_in">min</span>(RL[<span class="number">2</span>*pos-i],MR-i);</span><br><span class="line">	<span class="keyword">else</span> RL[i]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(s[i+RL[i]]==s[i-RL[i]])RL[i]++;</span><br><span class="line">    <span class="keyword">if</span>(i+RL[i]&gt;MR)MR=i+RL[i],pos=i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">char</span> *s,<span class="type">int</span> len)</span></span>&#123;</span><br><span class="line">  len=<span class="built_in">strlen</span>(s);P[<span class="number">0</span>]=<span class="string">&#x27;$&#x27;</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=len*<span class="number">2</span>+<span class="number">1</span>;i+=<span class="number">2</span>) P[i]=<span class="string">&#x27;#&#x27;</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;i++) P[i*<span class="number">2</span>+<span class="number">2</span>]=s[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="P4555-国家集训队-最长双回文串"><a href="#P4555-国家集训队-最长双回文串" class="headerlink" title="P4555 [国家集训队]最长双回文串"></a><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P4555">P4555 [国家集训队]最长双回文串</a></h3><p>$\ \ \ \ \ \ \,$在我们求好$RL$后，很明显的有一个dp，我们把对称轴上的信息移动到起始点和终点：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">  L[i+RL[i]<span class="number">-1</span>]=<span class="built_in">max</span>(L[i+RL[i]<span class="number">-1</span>],RL[i]<span class="number">-1</span>);</span><br><span class="line">  R[i-RL[i]+<span class="number">1</span>]=<span class="built_in">max</span>(R[i-RL[i]+<span class="number">1</span>],RL[i]<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>$\ \ \ \ \ \ \,$那么，显然的，答案等于：<br>${\rm Max}_{i=0}^{n-1}L_i+R_i[L_i\neq0,R_i\neq0]$</p>
+<p>$\ \ \ \ \ \ \,$代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> inf=<span class="number">0x7fffffff</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eps=<span class="number">1e-10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi=<span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="comment">//char buf[1&lt;&lt;15],*S=buf,*T=buf;</span></span><br><span class="line"><span class="comment">//char getch()&#123;return S==T&amp;&amp;(T=(S=buf)+fread(buf,1,1&lt;&lt;15,stdin),S==T)?0:*S++;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="type">char</span> ch;ch=<span class="built_in">getchar</span>();</span><br><span class="line">  <span class="keyword">while</span>(ch&lt;<span class="string">&#x27;0&#x27;</span>||ch&gt;<span class="string">&#x27;9&#x27;</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>) f=<span class="number">0</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">  <span class="keyword">while</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch&amp;<span class="number">15</span>);ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">  <span class="keyword">if</span>(f)<span class="keyword">return</span> x;<span class="keyword">else</span> <span class="keyword">return</span> -x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> RL[N&lt;&lt;<span class="number">1</span>],n;</span><br><span class="line"><span class="type">char</span> s[N],P[N&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="type">int</span> L[N&lt;&lt;<span class="number">1</span>],R[N&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Manacher</span><span class="params">(<span class="type">char</span> *s,<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> MR=<span class="number">0</span>,pos=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(MR&gt;i)RL[i]=<span class="built_in">min</span>(RL[<span class="number">2</span>*pos-i],MR-i);</span><br><span class="line">    <span class="keyword">else</span> RL[i]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(s[i+RL[i]]==s[i-RL[i]])RL[i]++;</span><br><span class="line">    <span class="keyword">if</span>(i+RL[i]&gt;MR)MR=i+RL[i],pos=i;</span><br><span class="line">    L[i+RL[i]<span class="number">-1</span>]=<span class="built_in">max</span>(L[i+RL[i]<span class="number">-1</span>],RL[i]<span class="number">-1</span>);</span><br><span class="line">  	R[i-RL[i]+<span class="number">1</span>]=<span class="built_in">max</span>(R[i-RL[i]+<span class="number">1</span>],RL[i]<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">char</span> *s,<span class="type">int</span> len)</span></span>&#123;</span><br><span class="line">  len=<span class="built_in">strlen</span>(s);P[<span class="number">0</span>]=<span class="string">&#x27;$&#x27;</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=len*<span class="number">2</span>+<span class="number">1</span>;i+=<span class="number">2</span>) P[i]=<span class="string">&#x27;#&#x27;</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;i++) P[i*<span class="number">2</span>+<span class="number">2</span>]=s[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,s);n=<span class="built_in">strlen</span>(s);</span><br><span class="line">  <span class="built_in">insert</span>(s,n);</span><br><span class="line">  <span class="built_in">Manacher</span>(P,n*<span class="number">2</span>+<span class="number">2</span>);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n*<span class="number">2</span>+<span class="number">1</span>;i+=<span class="number">2</span>)R[i]=<span class="built_in">max</span>(R[i],R[i<span class="number">-2</span>]<span class="number">-2</span>);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=n*<span class="number">2</span>+<span class="number">1</span>;i&gt;=<span class="number">1</span>;i-=<span class="number">2</span>)L[i]=<span class="built_in">max</span>(L[i],L[i+<span class="number">2</span>]<span class="number">-2</span>);</span><br><span class="line">  <span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">2</span>*n+<span class="number">1</span>;i+=<span class="number">2</span>)</span><br><span class="line">  <span class="keyword">if</span>(R[i]&amp;&amp;L[i])ans=<span class="built_in">max</span>(ans,L[i]+R[i]);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OI/" rel="tag"># OI</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+              <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag"># 字符串</a>
+              <a href="/tags/KMP/" rel="tag"># KMP</a>
+              <a href="/tags/AC%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag"># AC自动机</a>
+              <a href="/tags/Manachar/" rel="tag"># Manachar</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/12/29/%E5%85%B3%E4%BA%8EDP%E7%9A%84%E4%BC%98%E5%8C%96/" rel="prev" title="关于DP的优化">
+                  <i class="fa fa-chevron-left"></i> 关于DP的优化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/29/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="next" title="后缀自动机">
+                  后缀自动机 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">周道</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

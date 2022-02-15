@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"althenwaysatan.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="$\ \ \ \ \ \ \ \,$扩展中国剩余定理的引入，使得在模特定素数意义下的算法得以扩张为模任意数，这大大方便了我们对于算法的运用。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="由CRT合并引入的各种扩展求余和同余问题">
+<meta property="og:url" content="https://althenwaysatan.github.io/2018/12/30/%E7%94%B1CRT%E5%90%88%E5%B9%B6%E5%BC%95%E5%85%A5%E7%9A%84%E5%90%84%E7%A7%8D%E6%89%A9%E5%B1%95%E6%B1%82%E4%BD%99%E5%92%8C%E5%90%8C%E4%BD%99%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Althen&#39;s Blog">
+<meta property="og:description" content="$\ \ \ \ \ \ \ \,$扩展中国剩余定理的引入，使得在模特定素数意义下的算法得以扩张为模任意数，这大大方便了我们对于算法的运用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-12-30T04:32:09.000Z">
+<meta property="article:modified_time" content="2022-02-14T05:37:32.540Z">
+<meta property="article:author" content="周道">
+<meta property="article:tag" content="OI">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="CRT">
+<meta property="article:tag" content="exCRT">
+<meta property="article:tag" content="NTT">
+<meta property="article:tag" content="Lucas">
+<meta property="article:tag" content="exLucas">
+<meta property="article:tag" content="Euler">
+<meta property="article:tag" content="exEuler">
+<meta property="article:tag" content="BSGS">
+<meta property="article:tag" content="exBSGS">
+<meta property="article:tag" content="任意模数NTT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://althenwaysatan.github.io/2018/12/30/%E7%94%B1CRT%E5%90%88%E5%B9%B6%E5%BC%95%E5%85%A5%E7%9A%84%E5%90%84%E7%A7%8D%E6%89%A9%E5%B1%95%E6%B1%82%E4%BD%99%E5%92%8C%E5%90%8C%E4%BD%99%E9%97%AE%E9%A2%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://althenwaysatan.github.io/2018/12/30/%E7%94%B1CRT%E5%90%88%E5%B9%B6%E5%BC%95%E5%85%A5%E7%9A%84%E5%90%84%E7%A7%8D%E6%89%A9%E5%B1%95%E6%B1%82%E4%BD%99%E5%92%8C%E5%90%8C%E4%BD%99%E9%97%AE%E9%A2%98/","path":"2018/12/30/由CRT合并引入的各种扩展求余和同余问题/","title":"由CRT合并引入的各种扩展求余和同余问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>由CRT合并引入的各种扩展求余和同余问题 | Althen's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Althen's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">周道的个人博客，记录学习历程，目前正在逐步完善中</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/contentimg/beatheart.html" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E5%89%8D%E6%8F%90%E3%80%90%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86%E3%80%91"><span class="nav-number">1.</span> <span class="nav-text">大前提【中国剩余定理】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%8D%A2%E5%8D%A1%E6%96%AF%E5%AE%9A%E7%90%86%EF%BC%88exLucas%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">扩展卢卡斯定理（exLucas）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%A2%E5%8D%A1%E6%96%AF%E5%AE%9A%E7%90%86%EF%BC%88Lucas%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">卢卡斯定理（Lucas）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90P4720-%E3%80%90%E6%A8%A1%E6%9D%BF%E3%80%91%E6%89%A9%E5%B1%95%E5%8D%A2%E5%8D%A1%E6%96%AF%E3%80%91"><span class="nav-number">2.2.</span> <span class="nav-text">【P4720 【模板】扩展卢卡斯】</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%AC%A7%E6%8B%89%E7%AE%97%E6%B3%95%EF%BC%88exEuler%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">扩展欧拉算法（exEuler）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E7%AE%97%E6%B3%95%EF%BC%88Euler%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">欧拉算法（Euler）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90P4139-%E4%B8%8A%E5%B8%9D%E4%B8%8E%E9%9B%86%E5%90%88%E7%9A%84%E6%AD%A3%E7%A1%AE%E7%94%A8%E6%B3%95%E3%80%91"><span class="nav-number">3.2.</span> <span class="nav-text">【P4139 上帝与集合的正确用法】</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%A4%A7%E6%AD%A5%E5%B0%8F%E6%AD%A5%E7%AE%97%E6%B3%95%EF%BC%88exBSGS%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">扩展大步小步算法（exBSGS）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%AD%A5%E5%B0%8F%E6%AD%A5%E7%AE%97%E6%B3%95%EF%BC%88BSGS%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">大步小步算法（BSGS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90P4195-%E3%80%90%E6%A8%A1%E6%9D%BF%E3%80%91exBSGS-Spoj3105-Mod%E3%80%91"><span class="nav-number">4.2.</span> <span class="nav-text">【P4195 【模板】exBSGS&#x2F;Spoj3105 Mod】</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BB%E6%84%8F%E6%A8%A1%E6%95%B0NTT"><span class="nav-number">5.</span> <span class="nav-text">任意模数NTT</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="周道"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">周道</p>
+  <div class="site-description" itemprop="description">⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AlthenWaySatan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:guangyuanzhouzheyu@outlook.com" title="E-Mail → mailto:guangyuanzhouzheyu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/althenwaysatan" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;althenwaysatan" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/AlthenWaySatan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5862576360" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5862576360" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=2469265056&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;2469265056&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://ferric.top/" title="http:&#x2F;&#x2F;ferric.top&#x2F;" rel="noopener" target="_blank">FerricIon</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <a href="/">
+    <div class="back-to-home" role="button">
+      <i class="fa fa-home"></i>
+    </div>
+  </a>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://althenwaysatan.github.io/2018/12/30/%E7%94%B1CRT%E5%90%88%E5%B9%B6%E5%BC%95%E5%85%A5%E7%9A%84%E5%90%84%E7%A7%8D%E6%89%A9%E5%B1%95%E6%B1%82%E4%BD%99%E5%92%8C%E5%90%8C%E4%BD%99%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="周道">
+      <meta itemprop="description" content="⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Althen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          由CRT合并引入的各种扩展求余和同余问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-30 12:32:09" itemprop="dateCreated datePublished" datetime="2018-12-30T12:32:09+08:00">2018-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-14 13:37:32" itemprop="dateModified" datetime="2022-02-14T13:37:32+08:00">2022-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>$\ \ \ \ \ \ \ \,$扩展中国剩余定理的引入，使得在模特定素数意义下的算法得以扩张为模任意数，这大大方便了我们对于算法的运用。</p>
+<span id="more"></span>
+<h2 id="大前提【中国剩余定理】"><a href="#大前提【中国剩余定理】" class="headerlink" title="大前提【中国剩余定理】"></a>大前提<a href="/2018/12/29/扩展中国剩余定理/">【中国剩余定理】</a></h2><h2 id="扩展卢卡斯定理（exLucas）"><a href="#扩展卢卡斯定理（exLucas）" class="headerlink" title="扩展卢卡斯定理（exLucas）"></a>扩展卢卡斯定理（exLucas）</h2><h3 id="卢卡斯定理（Lucas）"><a href="#卢卡斯定理（Lucas）" class="headerlink" title="卢卡斯定理（Lucas）"></a>卢卡斯定理（Lucas）</h3><p>  $\ \ \ \ \ \ \,$卢卡斯定理是快速求组合数余的算法，其中最基本的卢卡斯定理只能解决模数为素数的情况，复杂度是$O(p)$预处理阶乘和逆元，每次回答$O(\log n)$。</p>
+<p>  $\ \ \ \ \ \ \,$当$n$或$m&gt;p$，套用下面的公式递归处理：</p>
+<p>  $C_{n}^{m}\equiv C_{\left\lfloor\frac{n}{P}\right\rfloor}^{\left\lfloor\frac{m}{P}\right\rfloor}\times C_{n\%P}^{m\%P}({\rm mod}\ P)$</p>
+<p>  $\ \ \ \ \ \ \,$当$n$或$m\leq p$时，套用定义公式：</p>
+<p>  $C_{n}^{m}=\frac{n!}{m!(n-m)!}({\rm mod}\ P)$</p>
+<p>  $\ \ \ \ \ \ \,$那么当模数不为素数的情况下，我们使用中国剩余定理（CRT）合并。</p>
+<ul>
+<li><p>将$P$分解质因数：<br>$P=\prod_{i=1}^rp_i^{c_i}$</p>
+</li>
+<li><p>得到同余方程：<br>$\begin{cases}x\equiv C_{n}^{m}\ \ ({\rm mod}\ p_1^{c_1})\\x\equiv C_{n}^{m}\ \ ({\rm mod}\ p_2^{c_2})\\x\equiv C_{n}^{m}\ \ ({\rm mod}\ p_3^{c_3})\\\ \ \ \ \ \ \ \ \ \ \ \cdots\\x\equiv C_{n}^{m}\ \ ({\rm mod}\ p_r^{c_r})\end{cases}$</p>
+</li>
+</ul>
+<p>$\ \ \ \ \ \ \,$显然可以很方便的用中国剩余定理（CRT）求出$x$的值，现在我们的问题是如何快速求出$C_{n}^{m}\% p_i^{c_i}$的值。</p>
+<p>  $\ \ \ \ \ \ \,$先忘记卢卡斯定理吧，这里并用不到它。</p>
+<p>  $\ \ \ \ \ \ \,$观察组合数的定义式：</p>
+<p>  $C_{n}^{m}=\frac{n!}{m!(n-m)!}=\frac{\prod_{i=1}^ni}{\prod_{i=1}^mi\prod_{i=1}^{n-m}i}$</p>
+<p>  $\ \ \ \ \ \ \,$现在的问题是如何快速求出$\prod_{i=1}^ni\ (\% p^{c})$的值。</p>
+<p>  $\ \ \ \ \ \ \,$我们开始拆开它：</p>
+<p>  $\prod_{i=1}^ni\ (\% p^{c})$</p>
+<p>  $\prod_{i=1,p|i}^ni\prod_{i=1,p\nmid i}^ni\ (\% p^{c})$</p>
+<p>  $\prod_{i=1}^{\left\lfloor\frac{n}{p}\right\rfloor}ip\prod_{i=1,p\nmid i}^ni\ (\% p^{c})$</p>
+<p>  ${\left\lfloor\frac{n}{p}\right\rfloor}!\cdot p\prod_{i=1,p\nmid i}^ni\ (\% p^{c})$</p>
+<p>  $\ \ \ \ \ \ \,$前面那一块阶乘我们递归处理，后面那一块嘛，我们可以发现他是有循环节的，而且长度最多为$p^{c}$，所以暴力算出循环节然后快速幂咯，至于中间那个$p$，我们最后再计算要方便不少。</p>
+<p>  $\ \ \ \ \ \ \,$现在阶乘倒是处理完了，我们带回定义式，发现还需要求个逆元。这个还是扩展欧几里得来吧，然后我们发现还有很多$p$没有乘，需要统计一下里面乘$p$的次数再快速幂乘回去。</p>
+<p>  $\ \ \ \ \ \ \,$说了这么多，终于有下面的模板了，复杂度大约在$O(P\log P)$左右：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">inv</span><span class="params">(<span class="type">long</span> <span class="type">long</span> a,<span class="type">long</span> <span class="type">long</span> p)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> x,y;<span class="built_in">exgcd</span>(a,p,x,y);</span><br><span class="line">  <span class="keyword">return</span> (x+p)%p==<span class="number">0</span>?p:(x+p)%p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">fac</span><span class="params">(<span class="type">long</span> <span class="type">long</span> n,<span class="type">long</span> <span class="type">long</span> p,<span class="type">long</span> <span class="type">long</span> pc)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n==<span class="number">1</span>||n==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> res=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">2</span>;i&lt;=pc;i++)<span class="keyword">if</span>(i%p)res=(res*i)%pc;</span><br><span class="line">  res=<span class="built_in">power</span>(res,n/pc,pc);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">2</span>;i&lt;=n%pc;i++)<span class="keyword">if</span>(i%p)res=(res*i)%pc;</span><br><span class="line">  <span class="keyword">return</span> (res*<span class="built_in">fac</span>(n/p,p,pc))%pc;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">C</span><span class="params">(<span class="type">long</span> <span class="type">long</span> n,<span class="type">long</span> <span class="type">long</span> m,<span class="type">long</span> <span class="type">long</span> p,<span class="type">long</span> <span class="type">long</span> pc,<span class="type">long</span> <span class="type">long</span> Mod)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n&lt;m)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> a=<span class="built_in">fac</span>(n,p,pc),b=<span class="built_in">fac</span>(m,p,pc),c=<span class="built_in">fac</span>(n-m,p,pc);</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> k=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=n;i;i/=p)k+=i/p;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=m;i;i/=p)k-=i/p;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=n-m;i;i/=p)k-=i/p;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> res=a*<span class="built_in">inv</span>(b,pc)%pc*<span class="built_in">inv</span>(c,pc)%pc*<span class="built_in">power</span>(p,k,pc)%pc;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">exLucas</span><span class="params">(<span class="type">long</span> <span class="type">long</span> n,<span class="type">long</span> <span class="type">long</span> m,<span class="type">long</span> <span class="type">long</span> Mod)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> res=<span class="number">0</span>,P=Mod;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">2</span>;i&lt;=P;i++)</span><br><span class="line">    <span class="keyword">if</span>(P%i==<span class="number">0</span>)&#123;</span><br><span class="line">      <span class="type">long</span> <span class="type">long</span> pc=<span class="number">1</span>;</span><br><span class="line">      <span class="keyword">while</span>(P%i==<span class="number">0</span>)P/=i,pc*=i;</span><br><span class="line">      res=(res+<span class="built_in">C</span>(n,m,i,pc,Mod)*(Mod/pc)%Mod*<span class="built_in">inv</span>(Mod/pc,pc)%Mod)%Mod;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="【P4720-【模板】扩展卢卡斯】"><a href="#【P4720-【模板】扩展卢卡斯】" class="headerlink" title="【P4720 【模板】扩展卢卡斯】"></a><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P4720">【P4720 【模板】扩展卢卡斯】</a></h3><p>  $\ \ \ \ \ \ \,$既然是模板题，就不多废话了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> inf=<span class="number">0x7fffffff</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eps=<span class="number">1e-10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi=<span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="comment">//char buf[1&lt;&lt;15],*S=buf,*T=buf;</span></span><br><span class="line"><span class="comment">//char getch()&#123;return S==T&amp;&amp;(T=(S=buf)+fread(buf,1,1&lt;&lt;15,stdin),S==T)?0:*S++;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">long</span> <span class="type">long</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="type">char</span> ch;ch=<span class="built_in">getchar</span>();</span><br><span class="line">    <span class="keyword">while</span>(ch&lt;<span class="string">&#x27;0&#x27;</span>||ch&gt;<span class="string">&#x27;9&#x27;</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>) f=<span class="number">0</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">    <span class="keyword">while</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch&amp;<span class="number">15</span>);ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">    <span class="keyword">if</span>(f)<span class="keyword">return</span> x;<span class="keyword">else</span> <span class="keyword">return</span> -x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">power</span><span class="params">(<span class="type">long</span> <span class="type">long</span> a,<span class="type">long</span> <span class="type">long</span> b,<span class="type">long</span> <span class="type">long</span> c)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> ans=<span class="number">1</span>;a=a%c;</span><br><span class="line">  <span class="keyword">for</span>(;b;b&gt;&gt;=<span class="number">1</span>,a=(a*a)%c)<span class="keyword">if</span>(b&amp;<span class="number">1</span>)ans=(ans*a)%c;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">exgcd</span><span class="params">(<span class="type">long</span> <span class="type">long</span> a,<span class="type">long</span> <span class="type">long</span> b,<span class="type">long</span> <span class="type">long</span> &amp;x,<span class="type">long</span> <span class="type">long</span> &amp;y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!b)&#123;x=<span class="number">1ll</span>;y=<span class="number">0ll</span>;<span class="keyword">return</span>;&#125;</span><br><span class="line">  <span class="built_in">exgcd</span>(b,a%b,y,x);y-=x*(a/b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">inv</span><span class="params">(<span class="type">long</span> <span class="type">long</span> a,<span class="type">long</span> <span class="type">long</span> p)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> x,y;<span class="built_in">exgcd</span>(a,p,x,y);</span><br><span class="line">  <span class="keyword">return</span> (x+p)%p==<span class="number">0</span>?p:(x+p)%p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">fac</span><span class="params">(<span class="type">long</span> <span class="type">long</span> n,<span class="type">long</span> <span class="type">long</span> p,<span class="type">long</span> <span class="type">long</span> pc)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n==<span class="number">1</span>||n==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> res=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">2</span>;i&lt;=pc;i++)<span class="keyword">if</span>(i%p)res=(res*i)%pc;</span><br><span class="line">  res=<span class="built_in">power</span>(res,n/pc,pc);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">2</span>;i&lt;=n%pc;i++)<span class="keyword">if</span>(i%p)res=(res*i)%pc;</span><br><span class="line">  <span class="keyword">return</span> (res*<span class="built_in">fac</span>(n/p,p,pc))%pc;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">C</span><span class="params">(<span class="type">long</span> <span class="type">long</span> n,<span class="type">long</span> <span class="type">long</span> m,<span class="type">long</span> <span class="type">long</span> p,<span class="type">long</span> <span class="type">long</span> pc,<span class="type">long</span> <span class="type">long</span> Mod)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n&lt;m)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> a=<span class="built_in">fac</span>(n,p,pc),b=<span class="built_in">fac</span>(m,p,pc),c=<span class="built_in">fac</span>(n-m,p,pc);</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> k=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=n;i;i/=p)k+=i/p;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=m;i;i/=p)k-=i/p;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=n-m;i;i/=p)k-=i/p;</span><br><span class="line">  <span class="keyword">return</span> (a*<span class="built_in">inv</span>(b,pc)%pc*<span class="built_in">inv</span>(c,pc)%pc*<span class="built_in">power</span>(p,k,pc)%pc)*(Mod/pc)%Mod*<span class="built_in">inv</span>(Mod/pc,pc)%Mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">exLucas</span><span class="params">(<span class="type">long</span> <span class="type">long</span> n,<span class="type">long</span> <span class="type">long</span> m,<span class="type">long</span> <span class="type">long</span> Mod)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> res=<span class="number">0</span>,P=Mod;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">2</span>;i&lt;=P;i++)</span><br><span class="line">    <span class="keyword">if</span>(P%i==<span class="number">0</span>)&#123;</span><br><span class="line">      <span class="type">long</span> <span class="type">long</span> pc=<span class="number">1</span>;</span><br><span class="line">      <span class="keyword">while</span>(P%i==<span class="number">0</span>)P/=i,pc*=i;</span><br><span class="line">      res=(res+<span class="built_in">C</span>(n,m,i,pc,Mod))%Mod;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> n=<span class="built_in">read</span>(),m=<span class="built_in">read</span>(),P=<span class="built_in">read</span>();</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,<span class="built_in">exLucas</span>(n,m,P));</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="扩展欧拉算法（exEuler）"><a href="#扩展欧拉算法（exEuler）" class="headerlink" title="扩展欧拉算法（exEuler）"></a>扩展欧拉算法（exEuler）</h2><h3 id="欧拉算法（Euler）"><a href="#欧拉算法（Euler）" class="headerlink" title="欧拉算法（Euler）"></a>欧拉算法（Euler）</h3><p>$\ \ \ \ \ \,$欧拉算法是快速求$a^b\%P$的值的算法，其核心是欧拉定理：</p>
+<p>$\ \ \ \ \ \,$当$a$,$P$互质时,有 $a^{\varphi(P)}\equiv1({\rm mod}\ P)$</p>
+<p>$\ \ \ \ \ \,$那么就有，欧拉算法：$a^b\%P=a^{b\%{\varphi(P)}}\%P$</p>
+<p>$\ \ \ \ \ \,$当模数不为素数的情况下，我们依然使用中国剩余定理（CRT）合并。</p>
+<ul>
+<li><p>将$P$分解质因数：<br>$P=\prod_{i=1}^rp_i^{c_i}$</p>
+</li>
+<li><p>得到同余方程：<br>$\begin{cases}x\equiv a^b\ \ ({\rm mod}\ p_1^{c_1})\\x\equiv a^b\ \ ({\rm mod}\ p_2^{c_2})\\x\equiv a^b\ \ ({\rm mod}\ p_3^{c_3})\\\ \ \ \ \ \ \ \ \ \ \ \cdots\\x\equiv a^b\ \ ({\rm mod}\ p_r^{c_r})\end{cases}$</p>
+<p>$\ \ \ \ \ \ \,$好吧其实这个结论挺简单的，证明比较麻烦，所以我们就开心地记结论吧，<a target="_blank" rel="noopener" href="https://blog.csdn.net/synapse7/article/details/19610361">证明在这里哦</a>。</p>
+<p>$a^b\%P=\begin{cases}a^{b\%{\varphi(P)}}\%P, &amp; {[\gcd(a,P)=1]}\\a^{b\%{\varphi(P)}+\varphi(P)}\%P, &amp; {[\gcd(a,P)\neq 1,b&gt;\varphi(P)]}\\a^b\%P, &amp; {[\gcd(a,P)\neq 1,b\leq\varphi(P)]}\end{cases}$</p>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Euler_Power</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(n==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span>(<span class="built_in">gcd</span>(a,n)==<span class="number">1</span>)<span class="keyword">return</span> <span class="built_in">power</span>(a,b%phi[n],n);</span><br><span class="line">  <span class="keyword">if</span>(b&gt;phi[n])<span class="keyword">return</span> <span class="built_in">power</span>(a,b%phi[n]+phi[n],n)%n;</span><br><span class="line">  <span class="keyword">if</span>(b&lt;=phi[n])<span class="keyword">return</span> <span class="built_in">power</span>(a,b,n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="【P4139-上帝与集合的正确用法】"><a href="#【P4139-上帝与集合的正确用法】" class="headerlink" title="【P4139 上帝与集合的正确用法】"></a><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P4139">【P4139 上帝与集合的正确用法】</a></h3><p>  $\ \ \ \ \ \ \,$这道题是只用了欧拉算法呢，我们不断递归过去，一定会遇到指数为$1$的时候，退出就行了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> inf=<span class="number">0x7fffffff</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eps=<span class="number">1e-10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi=<span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="comment">//char buf[1&lt;&lt;15],*S=buf,*T=buf;</span></span><br><span class="line"><span class="comment">//char getch()&#123;return S==T&amp;&amp;(T=(S=buf)+fread(buf,1,1&lt;&lt;15,stdin),S==T)?0:*S++;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="type">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="type">char</span> ch;ch=<span class="built_in">getchar</span>();</span><br><span class="line">  <span class="keyword">while</span>(ch&lt;<span class="string">&#x27;0&#x27;</span>||ch&gt;<span class="string">&#x27;9&#x27;</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>) f=<span class="number">0</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">  <span class="keyword">while</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch&amp;<span class="number">15</span>);ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">  <span class="keyword">if</span>(f)<span class="keyword">return</span> x;<span class="keyword">else</span> <span class="keyword">return</span> -x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">1e7</span>+<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> phi[N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">phi_table</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;=n;i++)phi[i]=<span class="number">0</span>;</span><br><span class="line">  phi[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;=n;i++)<span class="keyword">if</span>(!phi[i])</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;=n;j+=i)&#123;</span><br><span class="line">    <span class="keyword">if</span>(!phi[j])phi[j]=j;</span><br><span class="line">    phi[j]=phi[j]/i*(i<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;<span class="keyword">return</span> b?<span class="built_in">gcd</span>(b,a%b):a;&#125;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">power</span><span class="params">(<span class="type">long</span> <span class="type">long</span> a,<span class="type">long</span> <span class="type">long</span> b,<span class="type">long</span> <span class="type">long</span> mod)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> ans=<span class="number">1ll</span>;</span><br><span class="line">  <span class="keyword">while</span>(b)&#123;</span><br><span class="line">    <span class="keyword">if</span>(b&amp;<span class="number">1</span>)ans=(<span class="number">1ll</span>*ans*a)%mod;</span><br><span class="line">    a=(<span class="number">1ll</span>*a*a)%mod;b&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">solve</span><span class="params">(<span class="type">int</span> mod)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(mod==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">power</span>(<span class="number">2</span>,<span class="built_in">solve</span>(phi[mod])+phi[mod],mod);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">phi_table</span>(N<span class="number">-10</span>);</span><br><span class="line">  <span class="type">int</span> T=<span class="built_in">read</span>();</span><br><span class="line">  <span class="keyword">while</span>(T--)&#123;</span><br><span class="line">    <span class="type">int</span> mod=<span class="built_in">read</span>();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">solve</span>(mod));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="扩展大步小步算法（exBSGS）"><a href="#扩展大步小步算法（exBSGS）" class="headerlink" title="扩展大步小步算法（exBSGS）"></a>扩展大步小步算法（exBSGS）</h2><h3 id="大步小步算法（BSGS）"><a href="#大步小步算法（BSGS）" class="headerlink" title="大步小步算法（BSGS）"></a>大步小步算法（BSGS）</h3><p>$\ \ \ \ \ \ \,$大步小步算法，是求解指数方程同余最小自然数解的算法，其中必须保证模数与$a$互质,形如:</p>
+<p>$a^x\equiv b\ \ ({\rm mod}\ P)$</p>
+<p>$\ \ \ \ \ \ \,$其实想法还是挺简单的，因为$p$是素数，所以我们可以知道解 $x&lt;P$，那么我们$\sqrt P$ 分块。</p>
+<p>$\ \ \ \ \ \ \,$我们不妨假设我们的答案$x=k\sqrt P+l$，显然 $l&lt;\sqrt P$，$k&lt;\sqrt P$：</p>
+<p>$a^x\equiv b\ \ ({\rm mod}\ P)$</p>
+<p>$a^{k\sqrt p+l}\equiv b\ \ ({\rm mod}\ P)$<br>$(a^{\sqrt p})^{k}a^l\equiv b\ \ ({\rm mod}\ P)$</p>
+<p>$\left(a^{\sqrt p}\right)^{k}\equiv \left(a^l\right)^{-1}b\ \ ({\rm mod}\ P)$</p>
+<p>$\left(a^{\sqrt p}\right)^{k}\equiv a^{-l}b\ \ ({\rm mod}\ P)$</p>
+<p>$\ \ \ \ \ \ \,$那么我们枚举一个 $k$,就可以确定那个唯一的 $l$了,前提是我们要把所有$a^{-l}b\ \ ({\rm mod}\ P)$预处理出来，当然了，这不是问题，我们可以用$\rm map$存一下，复杂度$O(\sqrt P)$：</p>
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">BSGS</span><span class="params">(<span class="type">long</span> <span class="type">long</span> a,<span class="type">long</span> <span class="type">long</span> b,<span class="type">long</span> <span class="type">long</span> p)</span></span>&#123;</span><br><span class="line">  map&lt;<span class="type">int</span>,<span class="type">int</span>&gt;hash;hash.<span class="built_in">clear</span>();b%=p;</span><br><span class="line">  <span class="type">int</span> t=(<span class="type">int</span>)<span class="built_in">sqrt</span>(p)+<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;t;j++)&#123;</span><br><span class="line">    <span class="type">int</span> val=(<span class="type">int</span>)(b*<span class="built_in">power</span>(a,j,p)%p);</span><br><span class="line">    hash[val]=j;</span><br><span class="line">  &#125;</span><br><span class="line">  a=<span class="built_in">power</span>(a,t,p);</span><br><span class="line">  <span class="keyword">if</span>(a==<span class="number">0</span>)&#123;</span><br><span class="line">	  <span class="keyword">if</span>(b==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=t;i++)&#123;</span><br><span class="line">    <span class="type">int</span> val=<span class="built_in">power</span>(a,i,p);</span><br><span class="line">    <span class="type">int</span> j=hash.<span class="built_in">find</span>(val)==hash.<span class="built_in">end</span>()?<span class="number">-1</span>:hash[val];</span><br><span class="line">    <span class="keyword">if</span>(j&gt;=<span class="number">0</span>&amp;&amp;i*t-j&gt;=<span class="number">0</span>)<span class="keyword">return</span> i*t-j;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>  $\ \ \ \ \ \ \,$那么当模数与$a$不互质的情况下，我们依然使用中国剩余定理（CRT）合并。</p>
+<p>  $\ \ \ \ \ \ \,$由扩展欧拉定理可以得到，当$\gcd (a,P)\nmid b$并且$b\neq1$的时候，方程是无解的，我们先把他判掉。</p>
+<p>  $\ \ \ \ \ \ \,$首先我们的想法是，如何一步一步把它化简成模数与$a$互质，再BSGS就行了：</p>
+<p>  $a^x\equiv b\ \ ({\rm mod}\ P)$</p>
+<p>  $\frac{a^x}{\gcd (a,P)} \equiv \frac{b}{\gcd (a,P)}\ \ ({\rm mod}\ \frac{P}{\gcd (a,P)})$</p>
+<p>  ${a^{x-1}} \frac{a}{\gcd (a,P)}\equiv \frac{b}{\gcd (a,P)}\ \ ({\rm mod}\ \frac{P}{\gcd (a,P)})$</p>
+<p>  ${a^{x-1}} \equiv \frac{b}{a}\ \ ({\rm mod}\ \frac{P}{\gcd (a,P)})$</p>
+<p>  $\ \ \ \ \ \ \,$如此递归下去，化简成模数与$a$互质，再BSGS，返回值记住加上递归层数：<del>（- 然而并没有用到CRT啊，它是怎么混进来的？？- ex嘛，一样的）</del></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">exBSGS</span><span class="params">(<span class="type">long</span> <span class="type">long</span> a,<span class="type">long</span> <span class="type">long</span> b,<span class="type">long</span> <span class="type">long</span> p)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(p==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;a%=p,b%=p;</span><br><span class="line">	<span class="keyword">if</span>(b==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span>(a==<span class="number">0</span>)&#123;</span><br><span class="line">  	<span class="keyword">if</span>(b==<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">	<span class="type">int</span> k=<span class="number">0</span>,d=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> g=<span class="built_in">gcd</span>(a,p);g!=<span class="number">1</span>;g=<span class="built_in">gcd</span>(a,p))&#123;</span><br><span class="line">    <span class="keyword">if</span>(b%g) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    p/=g;b/=g;d=d*(a/g)%p;k++;</span><br><span class="line">    <span class="keyword">if</span>(d==b) <span class="keyword">return</span> k;</span><br><span class="line">  &#125;</span><br><span class="line">  a%=p;</span><br><span class="line">	map&lt;<span class="type">int</span>,<span class="type">int</span>&gt;hash;hash.<span class="built_in">clear</span>();</span><br><span class="line">	<span class="type">int</span> t=(<span class="type">int</span>)<span class="built_in">sqrt</span>(p)+<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;t;j++)&#123;</span><br><span class="line">    <span class="type">int</span> val=(<span class="type">int</span>)(b*<span class="built_in">power</span>(a,j,p)%p);</span><br><span class="line">    hash[val]=j;</span><br><span class="line">  &#125;</span><br><span class="line">  a=<span class="built_in">power</span>(a,t,p);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=t;i++)&#123;</span><br><span class="line">    <span class="type">int</span> val=d*<span class="built_in">power</span>(a,i,p)%p;</span><br><span class="line">    <span class="type">int</span> j=hash.<span class="built_in">find</span>(val)==hash.<span class="built_in">end</span>()?<span class="number">-1</span>:hash[val];</span><br><span class="line">    <span class="keyword">if</span>(j&gt;=<span class="number">0</span>&amp;&amp;i*t-j+k&gt;=<span class="number">0</span>)<span class="keyword">return</span> i*t-j+k;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="【P4195-【模板】exBSGS-Spoj3105-Mod】"><a href="#【P4195-【模板】exBSGS-Spoj3105-Mod】" class="headerlink" title="【P4195 【模板】exBSGS/Spoj3105 Mod】"></a><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P4195">【P4195 【模板】exBSGS/Spoj3105 Mod】</a></h3><p>  $\ \ \ \ \ \ \,$模板题，不废话：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> inf=<span class="number">0x7fffffff</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eps=<span class="number">1e-10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi=<span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="comment">//char buf[1&lt;&lt;15],*S=buf,*T=buf;</span></span><br><span class="line"><span class="comment">//char getch()&#123;return S==T&amp;&amp;(T=(S=buf)+fread(buf,1,1&lt;&lt;15,stdin),S==T)?0:*S++;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="type">char</span> ch;ch=<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">while</span>(ch&lt;<span class="string">&#x27;0&#x27;</span>||ch&gt;<span class="string">&#x27;9&#x27;</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>) f=<span class="number">0</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">	<span class="keyword">while</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch&amp;<span class="number">15</span>);ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">	<span class="keyword">if</span>(f)<span class="keyword">return</span> x;<span class="keyword">else</span> <span class="keyword">return</span> -x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">gcd</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;<span class="keyword">return</span> b?<span class="built_in">gcd</span>(b,a%b):a;&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">power</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> mod)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> ans=<span class="number">1ll</span>;</span><br><span class="line">	<span class="keyword">for</span>(;b;a=<span class="number">1ll</span>*a*a%mod,b&gt;&gt;=<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">if</span>(b&amp;<span class="number">1</span>)ans=<span class="number">1ll</span>*ans*a%mod;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> mod=<span class="number">100208</span>;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">HaHashsh</span>&#123;</span><br><span class="line">	<span class="type">int</span> head[mod],p;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">ss</span>&#123;<span class="type">int</span> v;<span class="type">int</span> w,last;&#125;G[<span class="number">100000</span>];</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span></span>&#123;<span class="built_in">memset</span>(head,<span class="number">0</span>,<span class="built_in">sizeof</span>(head));p=<span class="number">0</span>;&#125;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> a)</span></span>&#123;</span><br><span class="line">		<span class="type">int</span> A=a%mod;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=head[A];i;i=G[i].last)</span><br><span class="line">		<span class="keyword">if</span>(G[i].v==a)<span class="keyword">return</span> G[i].w;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">insert</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;</span><br><span class="line">		<span class="type">int</span> A=a%mod;</span><br><span class="line">		G[++p]=(ss)&#123;a,b,head[A]&#125;;head[A]=p;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;hash;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">exBSGS</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b,<span class="type">int</span> c)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(c==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	a%=c,b%=c;</span><br><span class="line">	<span class="keyword">if</span>(b==<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(a==<span class="number">0</span>)<span class="keyword">return</span> (b==<span class="number">0</span>)?<span class="number">1</span>:<span class="number">-1</span>;</span><br><span class="line">	<span class="type">int</span> k=<span class="number">0</span>,d=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> g=<span class="built_in">gcd</span>(a,c);g^<span class="number">1</span>;g=<span class="built_in">gcd</span>(a,c))&#123;</span><br><span class="line">		<span class="keyword">if</span>(b%g)<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		c/=g;b/=g;d=<span class="number">1ll</span>*d*(a/g)%c;k++;</span><br><span class="line">		<span class="keyword">if</span>(d==b)<span class="keyword">return</span> k;</span><br><span class="line">	&#125;</span><br><span class="line">	a%=c;</span><br><span class="line">	hash.<span class="built_in">clear</span>();</span><br><span class="line">	<span class="type">int</span> t=(<span class="type">int</span>)<span class="built_in">sqrt</span>(c)+<span class="number">1</span>;</span><br><span class="line">	<span class="type">int</span> val=b;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;t;j++)</span><br><span class="line">	hash.<span class="built_in">insert</span>(val,j),val=<span class="number">1ll</span>*val*a%c;</span><br><span class="line">	val=a=<span class="built_in">power</span>(a,t,c);val=<span class="number">1ll</span>*d*val%c;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,j;i&lt;=t;i++)&#123;</span><br><span class="line">		j=hash.<span class="built_in">find</span>(val);val=<span class="number">1ll</span>*val*a%c;</span><br><span class="line">		<span class="keyword">if</span>((~j)&amp;&amp;<span class="number">1ll</span>*i*t-j+k&gt;=<span class="number">0</span>)<span class="keyword">return</span> <span class="number">1ll</span>*i*t-j+k;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> a,b,c,ans;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;a,&amp;c,&amp;b)==<span class="number">3</span>&amp;&amp;(a||b||c))</span><br><span class="line">	<span class="keyword">if</span>(~(ans=<span class="built_in">exBSGS</span>(a,b,c)))cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">else</span> cout&lt;&lt;<span class="string">&quot;No Solution&quot;</span>&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="任意模数NTT"><a href="#任意模数NTT" class="headerlink" title="任意模数NTT"></a>任意模数NTT</h2><p>  $\ \ \ \ \ \ \,$在<a href="/2018/12/29/求多项式卷积的变换/">【求多项式卷积的变换】</a>中我们知道，一般NTT只在模数为NTT模数的时候才合法。那么当模数为任意数的时候怎么办呢？</p>
+<p>  <strong>$\ \ \ \ \ \ \,$ 一种解法，3模NTT</strong></p>
+<p>  $\ \ \ \ \ \ \,$假设在求卷积过后，我们的系数最大为 $A_{max}$，那么我们找若干个NTT模数，求一次NTT变换过后，我们对于这一项，可以得到一个同余方程组：</p>
+<p>   $\begin{cases}A_{max}\equiv A_x\ \ ({\rm mod}\ p_1)\\A_{max}\equiv A_x\ \ ({\rm mod}\ p_2)\\A_{max}\equiv A_x\ \ ({\rm mod}\ p_3)\\\ \ \ \ \ \ \ \ \ \ \ \cdots\\A_{max}\equiv A_x\ \ ({\rm mod}\ p_r)\end{cases}$</p>
+<p>   $\ \ \ \ \ \ \,$显然，当$\prod_{i-1}^rp_r\geq P$的时候，可以解出$A_{max}$的具体值。这个时候用CRT合并，再模$P$就出来了。</p>
+<p>   $\ \ \ \ \ \ \,$下面还是给出模板，这里取的NTT模数为$469762049$，$998244353$，$1004535809$，他们的原根都是 $3$：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">long</span> <span class="type">long</span> p1=<span class="number">469762049ll</span>,p2=<span class="number">998244353ll</span>,p3=<span class="number">1004535809ll</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">NTT</span><span class="params">(<span class="type">long</span> <span class="type">long</span> *a,<span class="type">int</span> f,<span class="type">int</span> n,<span class="type">int</span> mod)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)<span class="keyword">if</span>(i&lt;R[i])<span class="built_in">swap</span>(a[i],a[R[i]]);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">register</span> <span class="type">int</span> i=<span class="number">1</span>;i&lt;n;i&lt;&lt;=<span class="number">1</span>)&#123;</span><br><span class="line">    <span class="type">int</span> gn=<span class="built_in">power</span>(<span class="number">3</span>,(mod<span class="number">-1</span>)/(i&lt;&lt;<span class="number">1</span>),mod);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">register</span> <span class="type">int</span> j=<span class="number">0</span>;j&lt;n;j+=(i&lt;&lt;<span class="number">1</span>))&#123;</span><br><span class="line">      <span class="type">int</span> g=<span class="number">1</span>,x,y;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">register</span> <span class="type">int</span> n=<span class="number">0</span>;n&lt;i;++n,g=<span class="number">1ll</span>*g*gn%mod)&#123;</span><br><span class="line">        x=a[j+n],y=<span class="number">1ll</span>*g*a[j+n+i]%mod;</span><br><span class="line">        a[j+n]=(x+y)%mod;a[j+n+i]=(x-y+mod)%mod;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">	<span class="keyword">if</span>(f==<span class="number">-1</span>)&#123;</span><br><span class="line">    <span class="built_in">reverse</span>(a+<span class="number">1</span>,a+n);</span><br><span class="line">    <span class="type">int</span> inv=<span class="built_in">power</span>(n,mod<span class="number">-2</span>,mod);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">register</span> <span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)a[i]=<span class="number">1ll</span>*a[i]*inv%mod;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge_ntt</span><span class="params">(<span class="type">long</span> <span class="type">long</span> *a,<span class="type">long</span> <span class="type">long</span> *b,<span class="type">int</span> n,<span class="type">int</span> mod)</span></span>&#123;</span><br><span class="line">  <span class="built_in">NTT</span>(a,<span class="number">1</span>,n,mod);<span class="built_in">NTT</span>(b,<span class="number">1</span>,n,mod);</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">register</span> <span class="type">int</span> i=<span class="number">0</span>;i&lt;=n;i++)a[i]=<span class="number">1ll</span>*a[i]*b[i]%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mcpy</span><span class="params">(<span class="type">int</span> d)</span></span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=n;i++) ans[d][i]=lsa[i];</span><br><span class="line">  <span class="keyword">if</span>(d==<span class="number">2</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="built_in">memset</span>(lsa,<span class="number">0</span>,<span class="built_in">sizeof</span>(lsa));<span class="built_in">memset</span>(lsb,<span class="number">0</span>,<span class="built_in">sizeof</span>(lsb));</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=n;i++) lsa[i]=a[i];</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=m;i++) lsb[i]=b[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">ex_merge_NTT</span><span class="params">(<span class="type">long</span> <span class="type">long</span> *a,<span class="type">long</span> <span class="type">long</span> *b,<span class="type">int</span> la,<span class="type">int</span> lb,<span class="type">int</span> p)</span></span>&#123;</span><br><span class="line">	n=la,m=lb;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=la;i++) lsa[i]=a[i];</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=lb;i++) lsb[i]=b[i];</span><br><span class="line">	<span class="type">int</span> L=<span class="number">0</span>;<span class="keyword">for</span>(m+=n,n=<span class="number">1</span>;n&lt;=m;n&lt;&lt;=<span class="number">1</span>)L++;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">register</span> <span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">  R[i]=(R[i&gt;&gt;<span class="number">1</span>]&gt;&gt;<span class="number">1</span>)|((i&amp;<span class="number">1</span>)&lt;&lt;(L<span class="number">-1</span>));</span><br><span class="line">  <span class="built_in">merge_ntt</span>(lsa,lsb,n,p1);<span class="built_in">mcpy</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">merge_ntt</span>(lsa,lsb,n,p2);<span class="built_in">mcpy</span>(<span class="number">1</span>);</span><br><span class="line">  <span class="built_in">merge_ntt</span>(lsa,lsb,n,p3);<span class="built_in">mcpy</span>(<span class="number">2</span>);</span><br><span class="line">  <span class="built_in">NTT</span>(ans[<span class="number">0</span>],<span class="number">-1</span>,n,p1);</span><br><span class="line">  <span class="built_in">NTT</span>(ans[<span class="number">1</span>],<span class="number">-1</span>,n,p2);</span><br><span class="line">  <span class="built_in">NTT</span>(ans[<span class="number">2</span>],<span class="number">-1</span>,n,p3);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;=la+lb;i++)&#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> x=((<span class="built_in">mul</span>(<span class="number">1ll</span>*ans[<span class="number">0</span>][i]*p2%(p1*p2),<span class="built_in">power</span>(p2%p1,p1<span class="number">-2</span>,p1),(p1*p2)))+(<span class="built_in">mul</span>(<span class="number">1ll</span>*ans[<span class="number">1</span>][i]*p1%(p1*p2),<span class="built_in">power</span>(p1%p2,p2<span class="number">-2</span>,p2),(p1*p2))))%(p1*p2);</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> y=((((ans[<span class="number">2</span>][i]-x)%p3+p3)%p3)*<span class="built_in">power</span>((p1*p2)%p3,p3<span class="number">-2</span>,p3))%p3;</span><br><span class="line">    a[i]=(<span class="number">1ll</span>*(y%p)*((p1*p2)%p)%p+x%p)%p;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> la+lb;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OI/" rel="tag"># OI</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/CRT/" rel="tag"># CRT</a>
+              <a href="/tags/exCRT/" rel="tag"># exCRT</a>
+              <a href="/tags/NTT/" rel="tag"># NTT</a>
+              <a href="/tags/Lucas/" rel="tag"># Lucas</a>
+              <a href="/tags/exLucas/" rel="tag"># exLucas</a>
+              <a href="/tags/Euler/" rel="tag"># Euler</a>
+              <a href="/tags/exEuler/" rel="tag"># exEuler</a>
+              <a href="/tags/BSGS/" rel="tag"># BSGS</a>
+              <a href="/tags/exBSGS/" rel="tag"># exBSGS</a>
+              <a href="/tags/%E4%BB%BB%E6%84%8F%E6%A8%A1%E6%95%B0NTT/" rel="tag"># 任意模数NTT</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/12/30/%E5%AF%BC%E6%95%B0%E5%92%8C%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3/" rel="prev" title="导数和牛顿迭代">
+                  <i class="fa fa-chevron-left"></i> 导数和牛顿迭代
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/31/%E7%BD%91%E7%BB%9C%E6%B5%81-%E8%B4%B9%E7%94%A8%E6%B5%81%E5%92%8C%E4%BA%8C%E5%88%86%E5%9B%BE%E5%8C%B9%E9%85%8D%E6%A8%A1%E6%9D%BF/" rel="next" title="网络流，费用流和二分图匹配模板">
+                  网络流，费用流和二分图匹配模板 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">周道</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

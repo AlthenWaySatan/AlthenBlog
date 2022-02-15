@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/silver/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"althenwaysatan.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="$\ \ \ \ \ \ \ \,$关于拉格朗日插值法的复习笔记： $\ \ \ \ \ \ \,$拉格朗日插值法,是解决多项式点值表达式函数值的问题的算法，具体而言，问题如下： $\ \ \ \ \ \ \,$已知在二维平面上，一多项式$f$的函数图像经过 $n+1$ 个点 $(x_i,y_i)$ ，既我们知道 $f(x_i)&#x3D;y_i$，求$f(k)$的值。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="拉格朗日插值法">
+<meta property="og:url" content="https://althenwaysatan.github.io/2018/12/29/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%E6%B3%95/index.html">
+<meta property="og:site_name" content="Althen&#39;s Blog">
+<meta property="og:description" content="$\ \ \ \ \ \ \ \,$关于拉格朗日插值法的复习笔记： $\ \ \ \ \ \ \,$拉格朗日插值法,是解决多项式点值表达式函数值的问题的算法，具体而言，问题如下： $\ \ \ \ \ \ \,$已知在二维平面上，一多项式$f$的函数图像经过 $n+1$ 个点 $(x_i,y_i)$ ，既我们知道 $f(x_i)&#x3D;y_i$，求$f(k)$的值。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-12-29T06:34:28.000Z">
+<meta property="article:modified_time" content="2022-02-14T03:27:08.682Z">
+<meta property="article:author" content="周道">
+<meta property="article:tag" content="OI">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="拉格朗日插值法">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://althenwaysatan.github.io/2018/12/29/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://althenwaysatan.github.io/2018/12/29/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%E6%B3%95/","path":"2018/12/29/拉格朗日插值法/","title":"拉格朗日插值法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>拉格朗日插值法 | Althen's Blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Althen's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">周道的个人博客，记录学习历程，目前正在逐步完善中</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/contentimg/beatheart.html" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">初步分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%80%BC%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">插值法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">代码实现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98%E3%80%90Codeforces-Round-492-F-Cowmpany-Cowmpensation%E3%80%91"><span class="nav-number">4.</span> <span class="nav-text">例题【Codeforces Round #492 F. Cowmpany Cowmpensation】</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="周道"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">周道</p>
+  <div class="site-description" itemprop="description">⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AlthenWaySatan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:guangyuanzhouzheyu@outlook.com" title="E-Mail → mailto:guangyuanzhouzheyu@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://t.me/althenwaysatan" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;althenwaysatan" rel="noopener" target="_blank"><i class="fab fa-telegram fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/AlthenWaySatan" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;AlthenWaySatan" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5862576360" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5862576360" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://wpa.qq.com/msgrd?v=3&uin=2469265056&site=qq&menu=yes" title="QQ → http:&#x2F;&#x2F;wpa.qq.com&#x2F;msgrd?v&#x3D;3&amp;uin&#x3D;2469265056&amp;site&#x3D;qq&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://ferric.top/" title="http:&#x2F;&#x2F;ferric.top&#x2F;" rel="noopener" target="_blank">FerricIon</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <a href="/">
+    <div class="back-to-home" role="button">
+      <i class="fa fa-home"></i>
+    </div>
+  </a>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://althenwaysatan.github.io/2018/12/29/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="周道">
+      <meta itemprop="description" content="⚠️Hentai兽人控警告⚠️<br>会画点小画<br>AFO，正在自学很多东西">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Althen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          拉格朗日插值法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-12-29 14:34:28" itemprop="dateCreated datePublished" datetime="2018-12-29T14:34:28+08:00">2018-12-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-02-14 11:27:08" itemprop="dateModified" datetime="2022-02-14T11:27:08+08:00">2022-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>$\ \ \ \ \ \ \ \,$关于拉格朗日插值法的复习笔记：</p>
+<p>$\ \ \ \ \ \ \,$拉格朗日插值法,是解决多项式点值表达式函数值的问题的算法，具体而言，问题如下：</p>
+<p>$\ \ \ \ \ \ \,$已知在二维平面上，一多项式$f$的函数图像经过 $n+1$ 个点 $(x_i,y_i)$ ，既我们知道 $f(x_i)=y_i$，求$f(k)$的值。</p>
+<span id="more"></span>
+<h2 id="初步分析"><a href="#初步分析" class="headerlink" title="初步分析"></a>初步分析</h2><p>$\ \ \ \ \ \ \,$显然，经过 $n+1$ 个点的多项式函数一定是$n$次函数，那么也很显然的，我们可以列出一个 $n$ 元方程组来解决这个问题，形如：</p>
+<p>$\begin{cases}y_1=a_1\cdot x_1^n+a_2\cdot x_1^{n-1}+a_3\cdot x_1^{n-2}+…+a_{n+1}\\y_2=a_1\cdot x_2^n+a_2\cdot x_2^{n-1}+a_3\cdot x_2^{n-2}+…+a_{n+1}\\\ \ \ \ \ \ \ \ \ \ \ \ \ …\\y_n=a_1\cdot x_n^n+a_2\cdot x_n^{n-1}+a_3\cdot x_n^{n-2}+…+a_{n+1}\end{cases}$</p>
+<p>$\ \ \ \ \ \ \,$直观的，我们可以高斯消元来做，复杂度$O(n^3)$，复杂度多半已上天，那么我们如何快速处理呢？</p>
+<h2 id="插值法"><a href="#插值法" class="headerlink" title="插值法"></a>插值法</h2><p>$\ \ \ \ \ \ \,$我们现在知道的是 $f(x_i)=y_i$，那么我们想怎么快速表达出这个多项式，我们设定一种函数 $S_i$：</p>
+<p>$S_i(x)=[x=x_i]$</p>
+<p>$\ \ \ \ \ \ \,$它的意义是只有当 $x$ 为 $x_i$ 函数值才为 $1$，其他为 $0$，那么显然有：</p>
+<p>$f=\sum_{i=1}^n y_i\cdot S_i$</p>
+<p>$\ \ \ \ \ \ \,$很显然的，$S_i$ 是个 $n$ 次多项式，而我们的答案也就是：</p>
+<p>$f(k)=\sum_{i=1}^n y_i\cdot S_i(k)$</p>
+<p>$\ \ \ \ \ \ \,$遗憾地告诉你，光靠这个办法是不能还原$f$的函数图像的，只能得到近似图像，所以插值法是有一定误差的。</p>
+<p>$\ \ \ \ \ \ \,$现在我们简化了问题，如何求$S_i$ 是个 $n$ 次多项式。</p>
+<p>$\ \ \ \ \ \ \,$其实满足$S_i(x)$的函数取值合法挺简单的，主要问题是如何满足他是 $n$ 次多项式的事实，那么我们就先把它化作下面的形态：</p>
+<p>$S_i(k)=\prod_{j=1,j\neq \rm something}^{n+1}a_jk+b_j$</p>
+<p>$\ \ \ \ \ \ \,$如何就卡住了，我们不知道怎么办，但是还记得吗，我们只能得到近似图像，所以我们只需要满足$S_i(x)$的图像大约在$[x=x_i]$就行了，拉格朗日给了一种解法：</p>
+<p>$S_i(k)=\prod_{j=1,j\neq i}^{n+1}\frac{k-x_j}{x_i-x_j}$</p>
+<p>$\ \ \ \ \ \ \ \,$具体证明可以看这里：<a target="_blank" rel="noopener" href="https://blog.csdn.net/VictoryCzt/article/details/82933843">【 VictoryCzt_拉格朗日插值法学习笔记】</a></p>
+<p>$\ \ \ \ \ \ \ \,$所以得到拉格朗日公式（$n$个点），复杂度是$O(n^2)$的：</p>
+<p>$f(k)=\sum_{i=1}^{n} y_i\prod_{j=1,j\neq i}^{n}\frac{k-x_j}{x_i-x_j}$</p>
+<h2 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h2><p>$\ \ \ \ \ \ \,$普通的拉格朗日差值法其实代码很简单了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">double</span> <span class="title">Lagrange</span><span class="params">(<span class="type">double</span> *x,<span class="type">double</span> *y,<span class="type">double</span> n,<span class="type">double</span> k)</span></span>&#123;</span><br><span class="line">	<span class="type">double</span> top,bot,ret=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">double</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		top=<span class="number">1.0</span>;bot=<span class="number">1.0</span>;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">double</span> j=<span class="number">1</span>;j&lt;=n;++j)<span class="keyword">if</span>(i!=j)</span><br><span class="line">			top*=k-x[j],</span><br><span class="line">			bot*=x[i]-x[j];</span><br><span class="line">		ret+=y[i]*top/bot;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>$\ \ \ \ \ \ \,$有些时候呢，我们的 $x_i$ 是连续的，所以说公式变形为：</p>
+<p>$f(k)=\sum_{i=1}^{n} y_i\prod_{j=1,j\neq i}^{n}\frac{k-j}{i-j}$</p>
+<p>$\ \ \ \ \ \ \,$我们令：</p>
+<p>$pre_i=\prod_{j=1}^{i}(k-j)=pre_{i-1}\times(k-j)$</p>
+<p>$suf_i=\prod_{j=i}^{n}(k-j)=suf_{i+1}\times(k-j)$</p>
+<p>$\ \ \ \ \ \ \,$显然对于这两个函数是可以$O(n)$预处理的。</p>
+<p>$\ \ \ \ \ \ \,$原公式可以化成：</p>
+<p>$f(k)=\sum_{i=1}^{n} y_i \frac{pre_{i-1}\times suf_{i+1}}{(i-1)!\times(n-i)!}$</p>
+<p>$\ \ \ \ \ \ \,$注意分母是有符号需要判断的，$n-i$为奇数时，分母为负。</p>
+<p>$\ \ \ \ \ \ \,$显然阶乘也可以预处理，于是乎复杂度变成了$O(n)$。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="type">long</span> pre[N],suf[N],fac[N];</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">Lagrange</span><span class="params">(<span class="type">long</span> <span class="type">long</span> *y,<span class="type">long</span> <span class="type">long</span> n,<span class="type">long</span> <span class="type">long</span> k)</span></span>&#123;</span><br><span class="line">	<span class="type">long</span> <span class="type">long</span> top,bot,ret=<span class="number">0</span>;</span><br><span class="line">	pre[<span class="number">0</span>]=suf[n+<span class="number">1</span>]=fac[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)pre[i]=pre[i<span class="number">-1</span>]*(k-i);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=n;i&gt;=<span class="number">1</span>;i--)suf[i]=suf[i+<span class="number">1</span>]*(k-i);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;=n;i++)fac=fac*i;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		top*=pre[i<span class="number">-1</span>]*suf[i+<span class="number">1</span>],</span><br><span class="line">		bot*=fac[i<span class="number">-1</span>]*fac[n-i];</span><br><span class="line">		<span class="keyword">if</span>((n-i)&amp;<span class="number">1</span>) ret-=y[i]*top/bot;</span><br><span class="line">		<span class="keyword">else</span> ret+=y[i]*top/bot;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="例题【Codeforces-Round-492-F-Cowmpany-Cowmpensation】"><a href="#例题【Codeforces-Round-492-F-Cowmpany-Cowmpensation】" class="headerlink" title="例题【Codeforces Round #492 F. Cowmpany Cowmpensation】"></a>例题<a target="_blank" rel="noopener" href="https://codeforces.com/contest/995/problem/F">【Codeforces Round #492 F. Cowmpany Cowmpensation】</a></h2><p>$\ \ \ \ \ \ \,$题目大意：</p>
+<p>$\ \ \ \ \ \ \,$给你一棵 $n$ 个节点的树,以 $1$ 为根节点,现在让你给每个节点分配一个权值$∈[1,D]$,使得每个节点的权值不超过他的父亲节点（ $1$ 号节点除外）,问一共有多少种分配方式。$(1≤n≤3000, 1≤D≤10^9)$。</p>
+<p>$\ \ \ \ \ \ \,$显然直观的有一个二维树形dp的做法，一维表示当前节点，一维表示这个节点的取值情况，来描述方案数：</p>
+<p>$f_{i,j}=\prod_{s\in Son_i}f_{s,j}+f_{i,j-1}$</p>
+<p>$\ \ \ \ \ \ \,$答案就是$f_{1,D}$了。</p>
+<p>$\ \ \ \ \ \ \,$复杂度为 $O(nD)$ 的，过不了，但是我们观察dp式子，可以发现……这个家伙是个多项式吧？继续大胆猜测，这个是个 $n$ 维多项式。</p>
+<p>$\ \ \ \ \ \ \,$所以我们用dp来预处理出 $f_{1,i}\ ,\ {i\in[1,n+1]}$，然后使用拉格朗日差值法，便可以求出 $f_{1,D}$ 了，复杂度是 $O(n^2)$ 的。</p>
+<p>$\ \ \ \ \ \ \,$代码如下，<del>取模真的取死人啊</del></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> inf=<span class="number">0x7fffffff</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eps=<span class="number">1e-10</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi=<span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line"><span class="comment">//char buf[1&lt;&lt;15],*S=buf,*T=buf;</span></span><br><span class="line"><span class="comment">//char getch()&#123;return S==T&amp;&amp;(T=(S=buf)+fread(buf,1,1&lt;&lt;15,stdin),S==T)?0:*S++;&#125;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="type">char</span> ch;ch=<span class="built_in">getchar</span>();</span><br><span class="line">	<span class="keyword">while</span>(ch&lt;<span class="string">&#x27;0&#x27;</span>||ch&gt;<span class="string">&#x27;9&#x27;</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>) f=<span class="number">0</span>;ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">	<span class="keyword">while</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;x=(x&lt;&lt;<span class="number">1</span>)+(x&lt;&lt;<span class="number">3</span>)+(ch&amp;<span class="number">15</span>);ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">	<span class="keyword">if</span>(f)<span class="keyword">return</span> x;<span class="keyword">else</span> <span class="keyword">return</span> -x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N=<span class="number">3030</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">long</span> <span class="type">long</span> mod=<span class="number">1e9</span>+<span class="number">7</span>;</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">power</span><span class="params">(<span class="type">long</span> <span class="type">long</span> a,<span class="type">long</span> <span class="type">long</span> b)</span></span>&#123;</span><br><span class="line">	<span class="type">long</span> <span class="type">long</span> ans=<span class="number">1ll</span>;</span><br><span class="line">	<span class="keyword">for</span>(;b;b&gt;&gt;=<span class="number">1</span>,a=a*a%mod)<span class="keyword">if</span>(b&amp;<span class="number">1ll</span>)ans=ans*a%mod;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> D;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; G[N];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> f[N][N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> u)</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n+<span class="number">1</span>;i++)f[u][i]=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;G[u].<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">		<span class="built_in">dfs</span>(G[u][i]);</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;j&lt;=n+<span class="number">1</span>;j++)</span><br><span class="line">		f[u][j]=(f[u][j]*f[G[u][i]][j])%mod;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> x=<span class="number">1</span>;x&lt;=n+<span class="number">1</span>;x++)f[u][x]=(f[u][x]+f[u][x<span class="number">-1</span>])%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> pre[N],suf[N],fac[N];</span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">Lagrange</span><span class="params">(<span class="type">long</span> <span class="type">long</span> *y,<span class="type">long</span> <span class="type">long</span> n,<span class="type">long</span> <span class="type">long</span> k)</span></span>&#123;</span><br><span class="line">  <span class="type">long</span> <span class="type">long</span> top,bot,ret=<span class="number">0</span>,Fac;</span><br><span class="line">  pre[<span class="number">0</span>]=suf[n+<span class="number">1</span>]=Fac=<span class="number">1ll</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">1</span>;i&lt;=n;i++)pre[i]=(pre[i<span class="number">-1</span>]*(k-i+mod)%mod)%mod;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=n;i&gt;=<span class="number">1</span>;i--)suf[i]=(suf[i+<span class="number">1</span>]*(k-i+mod)%mod)%mod;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">long</span> <span class="type">long</span> i=<span class="number">2</span>;i&lt;=n;i++)Fac=Fac*i%mod;</span><br><span class="line">  fac[n]=<span class="built_in">power</span>(Fac,mod<span class="number">-2</span>);</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=n<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)fac[i]=fac[i+<span class="number">1</span>]*<span class="number">1ll</span>*(i+<span class="number">1</span>)%mod;</span><br><span class="line">  <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">    top=(pre[i<span class="number">-1</span>]*suf[i+<span class="number">1</span>]%mod)%mod,</span><br><span class="line">    bot=(fac[i<span class="number">-1</span>]*fac[n-i]%mod)%mod;</span><br><span class="line">    <span class="keyword">if</span>((n-i)&amp;<span class="number">1</span>)ret=(ret-(y[i]*top%mod*bot%mod)+mod)%mod;</span><br><span class="line">    <span class="keyword">else</span> ret=(ret+(y[i]*top%mod*bot%mod))%mod;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (ret+mod)%mod;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=<span class="built_in">read</span>();<span class="built_in">scanf</span>(<span class="string">&quot;%I64d&quot;</span>,&amp;D);D%=mod;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>,a;i&lt;=n;i++)</span><br><span class="line">	a=<span class="built_in">read</span>(),G[a].<span class="built_in">push_back</span>(i);</span><br><span class="line">	<span class="built_in">dfs</span>(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">if</span>(D&lt;=<span class="number">1ll</span>*n+<span class="number">1ll</span>)<span class="built_in">printf</span>(<span class="string">&quot;%I64d\n&quot;</span>,f[<span class="number">1</span>][D]);</span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;%I64d\n&quot;</span>,<span class="built_in">Lagrange</span>(f[<span class="number">1</span>],n+<span class="number">1</span>,D));</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OI/" rel="tag"># OI</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"># 数学</a>
+              <a href="/tags/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%E6%B3%95/" rel="tag"># 拉格朗日插值法</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/12/29/%E5%85%B3%E4%BA%8E%E6%95%B4%E5%9E%8B%E5%BC%82%E6%88%96%E7%9A%84%E7%BA%BF%E6%80%A7%E5%9F%BA/" rel="prev" title="关于整型异或的线性基">
+                  <i class="fa fa-chevron-left"></i> 关于整型异或的线性基
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/12/29/%E6%B1%82%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%8D%B7%E7%A7%AF%E7%9A%84%E5%8F%98%E6%8D%A2/" rel="next" title="求多项式卷积的变换">
+                  求多项式卷积的变换 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">周道</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
